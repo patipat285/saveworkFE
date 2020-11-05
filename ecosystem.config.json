@@ -1,0 +1,16 @@
+{
+  "apps" : [{
+    "name"        : "savework-sc-6600",
+    "script"      : "./frontend.js",
+    "watch"       : false,
+    "env": {
+      "NODE_ENV": "default",
+      "FE_PORT": "3303"
+    },
+    "env_prod" : {
+      "NODE_ENV": "prod",
+      "FE_PORT": "6600"
+    }
+
+  }]
+}

@@ -1,0 +1,310 @@
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1 id="welcome" >Welcome to SAVEWORK</h1>
+    <p class="lead">create by patipat kultalay</p>
+  </div>
+</header>
+
+<div class="body">
+  <!-- Navigation -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+    <div class="container">
+      <button
+      routerLink="/"
+      pButton
+      pRipple
+      label="Home"
+      icon="pi pi-home"
+      class="p-button-raised p-button-warning p-button-rounded" >
+      </button>
+
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button
+            pButton
+            pRipple
+            label="PROJECT"
+            routerLink="/project"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+          <li class="nav-item">
+              <button
+              pButton
+              pRipple
+              label="JOB TYPE"
+              routerLink="/jobtype"
+              class="p-button-raised p-button-success p-button-rounded" >
+              </button>
+          </li>
+          <li class="nav-item">
+            <button
+            routerLink="/saveWork"
+            pButton
+            pRipple
+            label="SAVEWORK"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <br />
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 style="text-align: center;">
+          SEARCH JOB TYPE
+        </h5>
+        <br />
+        <form>
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-2 col-form-label">Job type</label>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="textJobtype"
+                    placeholder="search Job type"
+                    [(ngModel)]="searchJobTypeName"
+                    name="textSearchJobType"
+                  />
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                 <label  class="col-2 col-form-label">Code</label>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="textCode"
+                    placeholder="search Code"
+                    name="textSearchCode"
+                    [(ngModel)]="searchCode"
+                  />
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col text-center">
+            <button (click)="fnSearchDataJobType()"  pButton type="button" label="Search" icon="pi pi-search" class="p-button-sm p-button-warning "></button>
+            <span>&nbsp;&nbsp;</span>
+            <button (click)="clickClear()" pButton type="button" label="Clear" icon="pi pi-times-circle" class="p-button-sm p-button-danger"></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-12">
+
+        <p-toolbar >
+          <div class="p-toolbar-group-left"></div>
+          <div class="p-toolbar-group-right">
+            <p-button
+              class="p-button-sm"
+              label="Create Job Type"
+              icon="pi pi-plus"
+              (click)="fnCreateAndEditJobtype()"
+            >
+          </p-button>
+          </div>
+        </p-toolbar>
+
+
+        <hr />
+
+        <div class="card">
+          <p-table
+            styleClass="p-datatable-sm p-datatable-gridlines"
+            [resizableColumns]="true"
+            [value]="dataListJobType"
+            [paginator]="true"
+            [rows]="20"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[20, 50, 100]"
+            [autoLayout]="true"
+            [customSort]="true"
+            [style]="{ 'min-width': '50px' }"
+            [responsive]="true"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 10%" pSortableColumn="No">No</th>
+                <th >Job Type Name</th>
+                <th >Code</th>
+                <th style="width: 10%" pSortableColumn="Manage">Manage</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ data.jobTypeName }}</td>
+                <td>{{data.code}}</td>
+                <td>
+                  <button
+                    pButton
+                    pRipple
+                    (click)="fnShowDetailData(data._id)"
+                    icon="pi pi-info-circle"
+                    class="p-button-rounded p-button-warning"
+                  ></button>
+                  <span>&nbsp;&nbsp;</span>
+                  <button
+                    (click)="fnEditProject(data._id)"
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success p-mr-2"
+                  ></button>
+                  <span>&nbsp;&nbsp;</span>
+                  <button
+                    (click)="fnDeleteJobType(data._id)"
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- start footer-->
+<div
+  id="footer"
+  style="color: ghostwhite"
+  class="footer-copyright text-center py-3"
+>
+  © 2020 Copyright: Theball
+</div>
+<!-- end footer-->
+
+<!-- start popup create new project-->
+<p-dialog
+[header]="headerPopup"
+[(visible)]="displayModal"
+[modal]="true"
+[style]="{ width: '50vw' }"
+[baseZIndex]="100"
+[autoZIndex]="false"
+[draggable]="false"
+[resizable]="false"
+[dismissableMask]="true"
+(onHide)="closeModal()"
+>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="">Job Type Name <span style="color: red;">*</span></label>
+              <input
+              [ngClass]="{'hasError': submitted === true && jobTypeName === ''}"
+              type="text"
+              class="form-control"
+              name="textjobTypeName"
+              id="textjobTypeName"
+              [(ngModel)]="jobTypeName"
+            />
+            </div>
+            <div class="form-group">
+              <label for="">Code <span style="color: red;">*</span></label>
+              <input
+              [ngClass]="{'hasError': submitted === true && code === ''}"
+                type="text"
+                class="form-control"
+                name="textCode"
+                id="textCode"
+                [(ngModel)]="code"
+              />
+            </div>
+          </div>
+          <div class="col-12" style="text-align: left">
+            <button (click)="fnSubmit(this.idJobType)"  type="submit"  class="btn btn-primary">Save</button>
+            <span>&nbsp;</span>
+            <button (click)="closeModal()" type="submit"  class="btn btn-primary">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+<!-- end popup create new project-->
+
+
+<p-dialog
+header="Detail"
+[(visible)]="displayModalDetail"
+[modal]="true"
+[style]="{ width: '50vw' }"
+[baseZIndex]="10000"
+[draggable]="false"
+[resizable]="false"
+[dismissableMask]="true">
+<div class="col-12">
+  <div class="form-group row">
+    <label style="font-size: 15px;" class="col-sm-6 text-right control-label text-title"><b>Job Type Name :</b></label>
+    <div class="col-sm-4">
+        <label style="font-size: 15px;" class="control-label text-data">{{jobTypeNameDetail}}</label>
+    </div>
+</div>
+<div class="form-group row">
+  <label style="font-size: 15px;" class="col-sm-6 text-right control-label text-title"><b>Code :</b></label>
+  <div class="col-sm-4">
+      <label style="font-size: 15px;" class="control-label text-data">{{codeDetail}}</label>
+  </div>
+</div>
+</div>
+</p-dialog>
+
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>

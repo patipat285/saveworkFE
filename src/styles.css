@@ -1,0 +1,73 @@
+body{
+background-color: #eefdff !important;
+width: 100%;
+}
+
+.card {
+  background-color: #00bfd8;
+  color: white;
+}
+
+h5{
+  color: white !important;
+}
+header {
+  padding: 100px 0 100px;
+  background-image: url("../../savework/src/assets/pic/header-background.jpg") !important;
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+
+#mainNav{
+  background-color: #00bfd8;
+  /* position: fixed; */
+  top: 0;
+  right: 0;
+  left: 0;
+  /* z-index: 1030; */
+}
+
+
+p{
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+
+#footer{
+   background-color: #00bfd8;
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+  border-width: 1px 1px 1px 1px;
+  background-color:  #00bfd8;
+  color: white;
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-right: 66%;
+  color: #626262;
+}
+
+#welcome {color: #00bfd8;
+margin-top: 2px;
+margin-right: 60%;
+font-size: 57px;
+}
+
+
+.hasError {
+  border-color: red;
+  box-shadow: red;
+}
+
+
+
+
+
+

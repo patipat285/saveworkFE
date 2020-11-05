@@ -1,0 +1,453 @@
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1 id="welcome" >Welcome to SAVEWORK</h1>
+    <p class="lead">create by patipat kultalay</p>
+  </div>
+</header>
+
+<div class="body">
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+    <div class="container">
+      <button
+      routerLink="/"
+      pButton
+      pRipple
+      label="Home"
+      icon="pi pi-home"
+      class="p-button-raised p-button-warning p-button-rounded" >
+      </button>
+
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button
+            pButton
+            pRipple
+            label="PROJECT"
+            routerLink="/project"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+          <li class="nav-item">
+              <button
+              pButton
+              pRipple
+              label="JOB TYPE"
+              routerLink="/jobtype"
+              class="p-button-raised p-button-success p-button-rounded" >
+              </button>
+          </li>
+          <li class="nav-item">
+            <button
+            routerLink="/saveWork"
+            pButton
+            pRipple
+            label="SAVEWORK"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <br />
+  <div class="container">
+    <div class="card">
+      <div class="card-body" >
+        <h5 style="text-align: center;">
+          SEARCH
+        </h5>
+        <br />
+
+        <form>
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-3 col-form-label">Date From</label>
+                <div class="col">
+                  <p-calendar
+                  name="searchFromDateFrom"
+                  [(ngModel)]="searchFromDateFrom"
+                  [style]="{'width':'100%'}"
+                  [inputStyle]="{'width':'100%'}"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="2000:2030"
+                  [dateFormat]="'dd-mm-yy'"
+                  inputId="navigators">
+                </p-calendar>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                 <label  class="col-3 col-form-label">Date To</label>
+                <div class="col">
+                  <p-calendar
+                  name="searchFromDateTo"
+                  [(ngModel)]="searchFromDateTo"
+                  [dateFormat]="'dd-mm-yy'"
+                  [style]="{'width':'100%'}"
+                  [inputStyle]="{'width':'100%'}"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="2000:2030"
+                  inputId="navigators"
+                  >
+                </p-calendar>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                 <label  class="col-3 col-form-label">Project</label>
+                <div class="col" >
+                  <select name="searchFromProject" [(ngModel)]="searchFromProject" class="custom-select" >
+                    <option style="color: gray;" placeholder="Please Choose Project..." selected >Please Choose Project...</option>
+                    <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}"  >{{data.projectName}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                 <label  class="col-3 col-form-label">Job Type</label>
+                <div class="col">
+                  <select class="custom-select" [(ngModel)]="searchFromJobType" name="searchFromJobType" >
+                    <option style="color: gray;"  placeholder="Please Choose Job Type..."  selected >Please Choose Job Type...</option>
+                    <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+        <br>
+
+
+        <div class="row">
+          <div class="col text-center">
+            <button   (click)="fnSearchDataWork()" pButton type="button" label="Search" icon="pi pi-search" class="p-button-sm "></button>
+            <span>&nbsp;&nbsp;</span>
+            <button (click)="clickClear()"  pButton type="button" label="Clear" icon="pi pi-times-circle" class="p-button-sm p-button-danger"></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- <div class="row">
+      <div class="col-6"></div>
+      <div class="col-12">
+
+        <p-toolbar >
+          <div class="p-toolbar-group-left"></div>
+          <div class="p-toolbar-group-right">
+            <p-button
+              class="p-button-sm"
+              label="Create Job Type"
+              icon="pi pi-plus"
+              (click)="fnSaveWork()"
+            >
+          </p-button>
+          </div>
+        </p-toolbar>
+        <hr />
+        <br />
+      </div>
+    </div> -->
+  </div>
+
+  <div class="container">
+<div class="card">
+  <div class="card-body">
+    <!-- <nz-calendar
+    [nzFullscreen]="true"
+    [(ngModel)]="selectedValueDate"
+    (nzSelectChange)="selectDate($event)">
+    </nz-calendar> -->
+
+    <dx-scheduler
+    (onAppointmentFormOpening)="closeModalDevxtream($event)"
+    [views]='["month"]'
+    currentView="month"
+    [height]="600">
+  </dx-scheduler>
+
+  </div>
+</div>
+
+    <br>
+
+  <p-table
+   styleClass="p-datatable-sm p-datatable-gridlines"
+   [resizableColumns]="true"
+   [value]="dataListWork"
+   [paginator]="true"
+   [rows]="20"
+   [showCurrentPageReport]="true"
+   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+   [rowsPerPageOptions]="[20, 50, 100]"
+   [autoLayout]="true"
+   [customSort]="true"
+   [style]="{ 'min-width': '50px' }"
+   [responsive]="true"
+    >
+   <ng-template pTemplate="header">
+     <tr>
+       <th>Date</th>
+       <th>Project</th>
+       <th>Type</th>
+       <th>Detail</th>
+       <th>MH</th>
+       <th>In</th>
+       <th>Out</th>
+
+       <th style="width: 6%;">Manage</th>
+     </tr>
+   </ng-template>
+   <ng-template pTemplate="body" let-data let-i="rowIndex">
+     <tr>
+       <td>{{ data.date  }}</td>
+       <td>{{data.project}}</td>
+       <td>{{data.jobType}}</td>
+       <td>{{data.detail}}</td>
+       <td >{{data.hour}}</td>
+       <td>{{data.timeIn  }}</td>
+       <td>{{data.timeOut }}</td>
+       <td>
+         <!-- <button
+           pButton
+           pRipple
+           icon="pi pi-info-circle"
+           class="p-button-rounded p-button-warning"
+         ></button> -->
+         <span>&nbsp;&nbsp;</span>
+         <button
+          (click)="fnEditWork(data._id)"
+           pButton
+           pRipple
+           icon="pi pi-pencil"
+           class="p-button-rounded p-button-success p-mr-2"
+         ></button>
+         <span>&nbsp;&nbsp;</span>
+         <button
+         (click)="fnDeleteWork(data._id)"
+           pButton
+           pRipple
+           icon="pi pi-trash"
+           class="p-button-rounded p-button-danger"
+         ></button>
+       </td>
+     </tr>
+   </ng-template>
+   <ng-template pTemplate="footer" >
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="color: rgb(82, 80, 80);">{{ this.sumTotalHour}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</ng-template>
+ </p-table>
+ </div>
+</div>
+
+
+<br>
+
+<!-- start footer-->
+<div
+  id="footer"
+  style="color: ghostwhite"
+  class="footer-copyright text-center py-3"
+>
+  © 2020 Copyright: Theball
+</div>
+<!-- end footer-->
+
+<!-- start popup create new project-->
+<p-dialog
+[(visible)]="displayModal"
+[modal]="true"
+[style]="{ width: '50%' }"
+[draggable]="false"
+[resizable]="false"
+[dismissableMask]="true"
+[header]="headerPopup"
+(onHide)="closeModal()"
+>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="">Start Date Work <span style="color: red;">*</span></label>
+               <p-calendar
+                [style]="{'width':'100%'}"
+                [inputStyle]="{'width':'100%'}"
+                [monthNavigator]="true"
+                [yearNavigator]="true"
+                yearRange="2000:2030"
+                inputId="navigators"
+                [(ngModel)]="dataCreate.date"
+                name="date"
+                [dateFormat]="'dd-mm-yy'"
+                [inputStyleClass]="(submitted === true && dataCreate.date === null) ? 'hasError' : ''"
+              >
+            </p-calendar>
+
+            </div>
+
+
+            <div class="form-group">
+              <label >Project <span style="color: red;">*</span></label>
+              <select [ngClass]="{'hasError': submitted === true && dataCreate.project === '' }" name="dataproject" [(ngModel)]="dataCreate.project" class="custom-select" >
+                <option style="color: gray;" selected >Please Choose Project...</option>
+                <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}" >{{data.projectName}}</option>
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <label for="">Job Type <span style="color: red;">*</span></label>
+              <select [ngClass]="{'hasError': submitted === true && dataCreate.jobType === '' }" name="datajobtype" class="custom-select" [(ngModel)]="dataCreate.jobType" >
+                <option style="color: gray;" selected >Please Choose Job Type...</option>
+                <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
+              </select>
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="">Detail <span style="color: red;">*</span></label>
+              <textarea
+              [ngClass]="{'hasError': submitted === true && dataCreate.detail === '' }"
+                type="text"
+                class="form-control"
+                name="textDetail"
+                id="textDetail"
+                rows="5"
+                [(ngModel)]="dataCreate.detail"
+              ></textarea>
+            </div>
+
+
+            <div class="form-group">
+              <label for="">In <span style="color: red;">*</span></label>
+               <p-calendar
+              name="timeIn"
+              [inputStyleClass]="(submitted === true && dataCreate.timeIn === null) ? 'hasError' : ''"
+              [(ngModel)]="dataCreate.timeIn"
+              [style]="{'width':'100%'}"
+              [showTime]="true"
+              hourFormat="24"
+              timeOnly="true"
+              inputId="timeonly"
+              [dateFormat]="'HH:mm'"
+              >
+            </p-calendar>
+            </div>
+
+
+            <div class="form-group">
+              <label for="">Out <span style="color: red;">*</span></label>
+              <p-calendar
+              [inputStyleClass]="(submitted === true && dataCreate.timeOut === null) ? 'hasError' : ''"
+              hourFormat="24"
+              name="timeOut"
+              [(ngModel)]="dataCreate.timeOut"
+              [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}"
+              timeOnly="true"
+              inputId="timeonly"
+              [dateFormat]="'HH:mm'"
+
+              >
+            </p-calendar>
+            </div>
+          </div>
+
+          <div class="col-12" style="text-align: left">
+            <button (click)="fnSubbmitSaveWork(this.idWork)" type="submit" class="btn btn-primary">Save</button>
+            <span>&nbsp;</span>
+            <button (click)="closeModal()" type="submit" class="btn btn-primary">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+<!-- end popup create new project-->
+
+
+<p-dialog
+header="Detail"
+[modal]="true"
+[style]="{ width: '25vw' }"
+[baseZIndex]="100"
+[autoZIndex]="false"
+[draggable]="false"
+[resizable]="false"
+[dismissableMask]="true">
+<div class="col-12">
+  <div class="form-group row">
+    <label style="font-size: 15px;" class="col-sm-6 text-right control-label text-title"><b>Job Type Name :</b></label>
+    <div class="col-sm-4">
+        <label class="control-label text-data"></label>
+    </div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-6 text-right control-label text-title"><b>Code :</b></label>
+  <div class="col-sm-4">
+      <label class="control-label text-data"></label>
+  </div>
+</div>
+</div>
+</p-dialog>
+
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+

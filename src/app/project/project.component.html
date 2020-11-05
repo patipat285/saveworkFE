@@ -1,0 +1,247 @@
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1 id="welcome" >Welcome to SAVEWORK</h1>
+    <p class="lead">create by patipat kultalay</p>
+  </div>
+</header>
+
+<div class="body">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+    <div class="container">
+      <button
+      routerLink="/"
+      pButton
+      pRipple
+      label="Home"
+      icon="pi pi-home"
+      class="p-button-raised p-button-warning p-button-rounded" >
+      </button>
+
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button
+            pButton
+            pRipple
+            label="PROJECT"
+            routerLink="/project"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+          <li class="nav-item">
+              <button
+              pButton
+              pRipple
+              label="JOB TYPE"
+              routerLink="/jobtype"
+              class="p-button-raised p-button-success p-button-rounded" >
+              </button>
+          </li>
+          <li class="nav-item">
+            <button
+            routerLink="/saveWork"
+            pButton
+            pRipple
+            label="SAVEWORK"
+            class="p-button-raised p-button-warning p-button-rounded" >
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br />
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 style="text-align: center; color: #626262">
+          SEARCH PROJECT
+        </h5>
+        <br />
+        <form >
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="inputEmail3" class="col-form-label">Project</label>
+                <div class="col-sm-10"  >
+                  <input
+
+                    required
+                    type="text"
+                    class="form-control"
+                    id="textSearchProjectname"
+                    placeholder="search project"
+                    [(ngModel)]="searchProjectName"
+                    name="textSearchProjectname"
+                  />
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col text-center">
+            <button (click)="fnSearchDataProject()" pButton type="button" label="Search" icon="pi pi-search" class="p-button-sm p-button-warning "></button>
+            <!-- <button (click)="fnSearchDataProject()" icon="pi pi-trash" type="button" class="btn btn-primary">Search</button> -->
+            <span>&nbsp;&nbsp;</span>
+            <button (click)="clickClear()" pButton type="button" label="Clear" icon="pi pi-times-circle" class="p-button-sm p-button-danger"></button>
+            <!-- <button (click)="clickClear()" type="button" class="btn btn-warning"><i class="fa fa-close"></i>Clear</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-12">
+
+        <p-toolbar >
+          <div class="p-toolbar-group-left"></div>
+          <div class="p-toolbar-group-right">
+            <p-button
+              class="p-button-sm"
+              (click)="fnCreateAndEditProject()"
+              label="Create Project"
+              icon="pi pi-plus"
+            >
+          </p-button>
+          </div>
+        </p-toolbar>
+
+
+        <hr />
+
+        <div class="card">
+          <p-table
+            styleClass="p-datatable-sm p-datatable-gridlines"
+            [resizableColumns]="true"
+            [value]="dataListProject"
+            [paginator]="true"
+            [rows]="20"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[20, 50, 100]"
+            [autoLayout]="true"
+            [customSort]="true"
+            [style]="{ 'min-width': '50px' }"
+            [responsive]="true"
+          >
+            <ng-template  pTemplate="header">
+              <tr >
+                <th style="width: 10%" >No</th>
+                <th >Project Name</th>
+
+                <th style="width: 10%" >Manage</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
+              <tr>
+
+                <td>{{ i + 1 }}</td>
+                <td>{{ data.projectName }}</td>
+                <td>
+                  <button
+
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success p-mr-2"
+                    (click)="fnEditProject(data._id)"
+                  ></button>
+                  <span>&nbsp;&nbsp;</span>
+                  <button
+
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger"
+                    (click)="fnDeleteProject(data._id)"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- start footer-->
+<div
+  id="footer"
+  style="color: ghostwhite"
+  class="footer-copyright text-center py-3"
+>
+  © 2020 Copyright: Theball
+</div>
+<!-- end footer-->
+
+<!-- start popup create new project-->
+<p-dialog
+  [header]="headerPopup"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  (onHide)="closeModal()"
+  [baseZIndex]="100"
+  [autoZIndex]="false"
+>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <form >
+          <div class="col-12">
+            <div class="form-group">
+              <label for="">Project Name <span style="color: red;">*</span></label>
+              <input
+                [ngClass]="{'hasError': submitted === true && projectName === ''}"
+                type="text"
+                class="form-control"
+                [(ngModel)]="projectName"
+                name="textProjectName"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-12" style="text-align: left">
+            <button (click)="fnSubmit(this.idProject)" label="Save" pButton type="button"  icon="pi pi pi-save" class="p-button-sm "></button>
+            <span>&nbsp;</span>
+            <button (click)="closeModal()" pButton label="Cancel" type="button" icon="pi pi-times-circle" class="p-button-sm p-button-danger "></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+<!-- end popup create new project-->
+
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
