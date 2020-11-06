@@ -12,7 +12,8 @@
   <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
     <div class="container">
       <button
-      routerLink="/"
+
+      [routerLink]="['/']"
       pButton
       pRipple
       label="Home"
@@ -36,7 +37,8 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <button
-            routerLink="/saveWork"
+
+            [routerLink]="['/saveWork']"
             pButton
             pRipple
             label="SAVEWORK"
@@ -48,7 +50,8 @@
             pButton
             pRipple
             label="PROJECT"
-            routerLink="/project"
+
+            [routerLink]="['/project']"
             class="p-button-raised p-button-warning p-button-rounded" >
             </button>
           </li>
@@ -57,7 +60,8 @@
               pButton
               pRipple
               label="JOB TYPE"
-              routerLink="/jobtype"
+
+              [routerLink]="['/jobtype']"
               class="p-button-raised p-button p-button-rounded" >
               </button>
           </li>
