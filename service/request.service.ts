@@ -184,9 +184,12 @@ searchDataWork(data) {
 }
 
 
-
-
-
+getHolidays() {
+  return [
+      new Date(2021, 4, 27),
+      new Date(2021, 6, 4)
+  ];
+}
 
 
 

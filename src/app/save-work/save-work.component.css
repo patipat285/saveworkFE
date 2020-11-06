@@ -1,3 +1,28 @@
 a{
   text-decoration: none;
 }
+
+
+disable-date,
+.dinner {
+  height: 100%;
+}
+
+::ng-deep .disable-date {
+  background-image: repeating-linear-gradient(135deg,
+      rgba(255, 58, 44, 0.1),
+      rgba(255, 58, 44, 0.1) 4px,
+      transparent 3px,
+      transparent 5px);
+  color: #d3212a;
+}
+
+::ng-deep .dx-scheduler-header-panel-cell .disable-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+

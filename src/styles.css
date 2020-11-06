@@ -1,10 +1,11 @@
 body{
-background-color: #eefdff !important;
+background-color: rgb(235, 244, 255) !important;
 width: 100%;
+
 }
 
 .card {
-  background-color: #00bfd8;
+  background-color: rgb(28, 90, 169);
   color: white;
 }
 
@@ -13,7 +14,8 @@ h5{
 }
 header {
   padding: 100px 0 100px;
-  background-image: url("../../savework/src/assets/pic/header-background.jpg") !important;
+  /* background-image: url("../../savework/src/assets/pic/header-background.jpg") !important; */
+  background-color:#ffffff !important ;
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -23,7 +25,7 @@ header {
 
 
 #mainNav{
-  background-color: #00bfd8;
+  background-color: rgb(28, 90, 169);
   /* position: fixed; */
   top: 0;
   right: 0;
@@ -38,12 +40,12 @@ p{
 
 
 #footer{
-   background-color: #00bfd8;
+   background-color: rgb(28, 90, 169);
 }
 
 .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
   border-width: 1px 1px 1px 1px;
-  background-color:  #00bfd8;
+  background-color:  rgb(28, 90, 169);
   color: white;
 }
 
@@ -54,9 +56,10 @@ p{
   color: #626262;
 }
 
-#welcome {color: #00bfd8;
+#welcome {
+color:rgb(28, 90, 169);
 margin-top: 2px;
-margin-right: 60%;
+margin-right: 30%;
 font-size: 57px;
 }
 
@@ -68,6 +71,17 @@ font-size: 57px;
 
 
 
+.bg-primary {
+  background-color: rgb(235 244 255)!important;
+}
 
 
+img {
+  vertical-align: middle;
+  border-style: none;
+  width: 17%;
+  margin-left: 62%;
+  margin-top: -18%;
+  margin-bottom: -11%;
+}
 

@@ -46,7 +46,8 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
     DxButtonModule,
     DxAutocompleteModule,
     DxSwitchModule,
-    NzCalendarModule
+    NzCalendarModule,
+    DxTemplateModule
   ]
 })
 export class SaveWorkModule { }

@@ -3,6 +3,7 @@
     <h1 id="welcome" >Welcome to SAVEWORK</h1>
     <p class="lead">create by patipat kultalay</p>
   </div>
+  <img src="../../assets/pic/product.png" alt="">
 </header>
 
 <div class="body">
@@ -35,6 +36,15 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <button
+            routerLink="/saveWork"
+            pButton
+            pRipple
+            label="SAVEWORK"
+            class="p-button-raised p-button p-button-rounded" >
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
             pButton
             pRipple
             label="PROJECT"
@@ -48,18 +58,10 @@
               pRipple
               label="JOB TYPE"
               routerLink="/jobtype"
-              class="p-button-raised p-button-success p-button-rounded" >
+              class="p-button-raised p-button p-button-rounded" >
               </button>
           </li>
-          <li class="nav-item">
-            <button
-            routerLink="/saveWork"
-            pButton
-            pRipple
-            label="SAVEWORK"
-            class="p-button-raised p-button-warning p-button-rounded" >
-            </button>
-          </li>
+
         </ul>
       </div>
     </div>

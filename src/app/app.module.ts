@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { DxAutocompleteModule, DxTemplateModule } from 'devextreme-angular';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
  import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -27,7 +27,9 @@ registerLocaleData(en);
     ConfirmDialogModule,
     FormsModule,
     HttpClientModule,
-    NzCalendarModule
+    NzCalendarModule,
+    DxAutocompleteModule,
+    DxTemplateModule
   ],
   providers: [ConfirmationService, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

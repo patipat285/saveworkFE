@@ -1,7 +1,10 @@
+import { RequestService } from './../../../service/request.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RequestService } from '../../../service/request.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import notify from 'devextreme/ui/notify';
+
+import * as _ from 'lodash';
 
 
 
@@ -37,6 +40,7 @@ export class SaveWorkComponent implements OnInit {
   submitted = false;
   sat :any;
   sun :any;
+  disabledDates = null;
 
 
 
@@ -46,7 +50,8 @@ export class SaveWorkComponent implements OnInit {
     this.fnGetDropdownProject();
     this.fnGetDataDropdownJobType();
     this.fnGetDataWork();
-    this.fnHoliday();
+    // this.fnHoliday();
+   ;
   }
 
   fnGetDropdownProject() {
@@ -164,23 +169,26 @@ export class SaveWorkComponent implements OnInit {
       for (datalist of this.dataListWork) {
         sumtimeIN = moment(datalist.timeIn).format('yyyy-MM-DD HH:mm:ss');
         sumtimeOut = moment(datalist.timeOut).format('yyyy-MM-DD HH:mm:ss');
-        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(
-          new Date(sumtimeIN),
-          new Date(sumtimeOut)
-        );
+        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(new Date(sumtimeIN),new Date(sumtimeOut));
         datalist.hour = this.sumHour;
         sumTotal = sumTotal + datalist.hour;
         this.sumTotalHour = sumTotal;
         datalist.date = moment(datalist.date).format('DD-MM-YYYY');
         datalist.timeIn = moment(datalist.timeIn).format('HH:mm');
         datalist.timeOut = moment(datalist.timeOut).format('HH:mm');
+        // if(datalist.date === datalist.date){
+        //   // datalist.detail = datalist.detail + datalist.detail
+        //   // console.log("SaveWorkComponent -> fnGetDataWork -> datalist.detail", datalist.detail)
+        // }
       }
-      console.log(
-        'SaveWorkComponent -> fnGetDataWork -> this.dataListWork',
-        this.dataListWork
-      );
+      let dataClone = _.cloneDeep(this.dataListWork)
+      this.fnInsertInRow(dataClone)
+      console.log('SaveWorkComponent -> fnGetDataWork -> this.dataListWork',this.dataListWork);
+
+
     });
   }
+
 
   //คำนวน ชั่วโมงจาก เวลา เข้า-ออก
   fnCalDiffHourFromTimeInTimeOut(startDate, endDate) {
@@ -264,42 +272,63 @@ export class SaveWorkComponent implements OnInit {
   closeModalDevxtream(event) {
     console.log('SaveWorkComponent -> closeModalDevxtream -> event', event);
     event.cancel = true;
-    this.displayModal = true;
-    this.headerPopup = 'Save Work';
-    this.dataCreate.date = event.appointmentData.startDate;
-
-    (this.dataCreate.timeIn = new Date('November 05, 1990 09:00:00')),
-      (this.dataCreate.timeOut = new Date('November 05, 1990 18:00:00'));
+      this.displayModal = true;
+      this.headerPopup = 'Save Work';
+      this.dataCreate.date = event.appointmentData.startDate;
+      // (this.dataCreate.timeIn = new Date('November 05, 1990 09:00:00')),
+      // (this.dataCreate.timeOut = new Date('November 05, 1990 18:00:00'));
   }
 
 
+  isWeekend(date: Date) {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+}
 
-  fnHoliday(){
-    var d = new Date();
-    var getTot = this.daysInMonth(d.getMonth(),d.getFullYear()); //Get total days in a month
-    var sat = new Array();   //Declaring array for inserting Saturdays
-    var sun = new Array();   //Declaring array for inserting Sundays
 
-    for(var i=1;i<=getTot;i++){    //looping through days in month
-        var newDate = new Date(d.getFullYear(),d.getMonth(),i)
-        if(newDate.getDay()==0){   //if Sunday
-            sun.push(i);
-        }
-        if(newDate.getDay()==6){   //if Saturday
-            sat.push(i);
-        }
+notifyDisableDate() {
+  Swal.fire({
+    icon: 'warning',
+    title: 'เป็นวันหยุด!!'
+  });
+}
 
-    }
 
-    this.sat = sat;
-    this.sun = sun;
-    console.log(sat);
-    console.log(sun);
+fnInsertInRow(dataClone){
+  let newData = _.groupBy(dataClone, 'date');
+  let dataTemp =[];
+  for (let key in newData) {
+      if (newData[key].length > 1) {
+        let m : any = {};
+        for (let iterator of newData[key]) {
+              m._id = iterator._id
+              m.date = iterator.date
+              m.timeIn = !m.timeIn ? '' + iterator.timeIn : `${m.timeIn}\n${iterator.timeIn}`
+              m.timeOut = !m.timeOut ? '' + iterator.timeOut : `${m.timeOut}\n${iterator.timeOut}`
+              m.project = !m.project ? '' + iterator.project : `${m.project}\n${iterator.project}`
+              m.hour = !m.hour ? '' + iterator.hour : `${m.hour}\n${iterator.hour}`
+              m.jobType = !m.jobType ? '' + iterator.jobType : `${m.jobType}\n${iterator.jobType}`
+              m.detail = !m.detail ? '' + iterator.detail : `${m.detail}\n${iterator.detail}`
+              dataTemp.push(m)
 
+          }
+      } else {
+          let r :any = {};
+          r._id = newData[key][0]._id
+          r.date = newData[key][0].date
+          r.timeIn = newData[key][0].timeIn
+          r.timeOut = newData[key][0].timeOut
+          r.project = newData[key][0].project
+          r.hour = newData[key][0].hour
+          r.jobType = newData[key][0].jobType
+          r.detail = newData[key][0].detail
+          dataTemp.push(r)
+      }
   }
+  let data = _.unionBy(dataTemp, 'date')
+  this.dataListWork = data;
 
-  daysInMonth(month,year) {
-    return new Date(year, month, 0).getDate();
+
 }
 
 
