@@ -35,8 +35,8 @@ export class SaveWorkComponent implements OnInit {
   headerPopup = '';
   idWork: any;
   searchFromDateFrom: any;
-  searchFromProject: any;
-  searchFromJobType: any;
+  searchFromProject: any = "";
+  searchFromJobType: any = "";
   submitted = false;
   sat :any;
   sun :any;
@@ -121,13 +121,13 @@ export class SaveWorkComponent implements OnInit {
         if (this.idWork) {
           this.RequestService.updateDataWork(this.idWork, data).subscribe(
             (data) => {
-              Swal.fire('Success!', 'Update Project Success', 'success');
+              Swal.fire('Success!', ' Update Success', 'success');
               this.fnGetDataWork();
             }
           );
         }
         this.RequestService.saveWork(data).subscribe((data) => {
-          Swal.fire('Success!', 'Create Project Success', 'success');
+          Swal.fire('Success!', 'Save Work Success', 'success');
           this.dataCreate = {};
           this.fnGetDataWork();
         });
@@ -221,7 +221,7 @@ export class SaveWorkComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.RequestService.deleteDataWork(id).subscribe((res) => {
-          Swal.fire('Deleted!', 'delete work success', 'success');
+          Swal.fire('Deleted!', 'delete success', 'success');
           this.fnGetDataWork();
         });
       }
@@ -278,6 +278,10 @@ export class SaveWorkComponent implements OnInit {
       this.dataCreate.date = event.appointmentData.startDate;
       this.dataCreate.timeIn = new Date('November 05, 1990 09:00:00')
       this.dataCreate.timeOut = new Date('November 05, 1990 18:00:00')
+      this.dataCreate.project = ''
+      this.dataCreate.jobType = ''
+      this.dataCreate.detail = ''
+
   }
 
 
@@ -286,13 +290,7 @@ export class SaveWorkComponent implements OnInit {
     return day === 0 || day === 6;
 }
 
-// fnGetisHoliday() {
-//   const localeDate = date.toLocaleDateString();
-//   const holidays = this.RequestService.getHolidays();
-//   return holidays.subscribe(holiday => {
-//       return holiday.toLocaleDateString() === localeDate;
-//   })
-// }
+
 
 
 
@@ -314,17 +312,6 @@ isHoliday(date: Date) {
 }
 
 
-
-
-// isHoliday(date: Date) {
-//   const localeDate = date.toLocaleDateString();
-//   const holidays : any  = this.holiday;
-//   let a : any = moment(holidays).toDate()
-
-//   return a.filter(holiday => {
-//       return holiday.toLocaleDateString() === localeDate;
-//   }).length > 0;
-// }
 
 
 
@@ -375,16 +362,8 @@ fnInsertInRow(dataClone){
 
 }
 
-getHolidays() {
-  return [
-      new Date(2021, 4, 27),
-      new Date(2021, 6, 4)
-  ];
-}
 
-getMovieById(id) {
-  return Query(this.moviesData).filter(["id", "=", id]).toArray()[0];
-}
+
 }
 
 

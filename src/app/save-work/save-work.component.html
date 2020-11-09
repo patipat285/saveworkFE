@@ -90,6 +90,7 @@
                 <label class="col-3 col-form-label">Date From</label>
                 <div class="col">
                   <p-calendar
+                  [placeholder]="'Select Date'"
                   name="searchFromDateFrom"
                   [(ngModel)]="searchFromDateFrom"
                   [style]="{'width':'100%'}"
@@ -114,7 +115,7 @@
                  <label  class="col-3 col-form-label">Project</label>
                 <div class="col" >
                   <select name="searchFromProject" [(ngModel)]="searchFromProject" class="custom-select" >
-                    <option style="color: gray;" placeholder="Please Choose Project..." selected >Please Choose Project...</option>
+                    <option style="color: gray;" value=""  selected >Please Choose Project...</option>
                     <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}"  >{{data.projectName}}</option>
                   </select>
                 </div>
@@ -129,7 +130,7 @@
                  <label  class="col-3 col-form-label">Job Type</label>
                 <div class="col">
                   <select class="custom-select" [(ngModel)]="searchFromJobType" name="searchFromJobType" >
-                    <option style="color: gray;"  placeholder="Please Choose Job Type..."  selected >Please Choose Job Type...</option>
+                    <option style="color: gray;"  value=""  selected >Please Choose Job Type...</option>
                     <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
                   </select>
                 </div>
@@ -175,16 +176,11 @@
       [showAllDayPanel]="false"
       [height]="600"
       dataCellTemplate="dataCellTemplate"
-      appointmentTemplate='appointment-template'
+
     >
     <div *dxTemplate="let dateCell of 'dateCellTemplate'"[ngClass]="{'disable-date': isWeekend(dateCell.date) }">{{dateCell.text}}</div>
     <div *dxTemplate="let dataCell of 'dataCellTemplate'"[ngClass]="{'disable-date': isHoliday(dataCell.startDate) || isWeekend(dataCell.startDate)}">{{dataCell.text}}</div>
-    <div *dxTemplate='let model of "appointment-template"'>
-      <div class='movie'>
-          <img [src]='getMovieById(model.appointmentData.movieId).image' />
-          <div class='movie-text'>{{getMovieById(model.appointmentData.movieId).text}}</div>
-      </div>
-  </div>
+
 
   </dx-scheduler>
 
@@ -322,7 +318,7 @@
             <div class="form-group">
               <label >Project <span style="color: red;">*</span></label>
               <select [ngClass]="{'hasError': submitted === true && dataCreate.project === '' }" name="dataproject" [(ngModel)]="dataCreate.project" class="custom-select" >
-                <option style="color: gray;" selected >Please Choose Project...</option>
+                <option style="color: gray;" value="" selected >Please Choose Project...</option>
                 <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}" >{{data.projectName}}</option>
               </select>
             </div>
@@ -331,7 +327,7 @@
             <div class="form-group">
               <label for="">Job Type <span style="color: red;">*</span></label>
               <select [ngClass]="{'hasError': submitted === true && dataCreate.jobType === '' }" name="datajobtype" class="custom-select" [(ngModel)]="dataCreate.jobType" >
-                <option style="color: gray;" selected >Please Choose Job Type...</option>
+                <option style="color: gray;" value="" selected >Please Choose Job Type...</option>
                 <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
               </select>
             </div>
