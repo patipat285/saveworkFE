@@ -32,5 +32,6 @@ app.use("/saveWork", (req, res) => {
 
 //use http
 app.listen(frontEndPort, function () {
+  console.log('222222');
   console.log("The Cool app listening on port " + frontEndPort + "!");
 });
