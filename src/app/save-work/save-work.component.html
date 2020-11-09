@@ -175,9 +175,17 @@
       [showAllDayPanel]="false"
       [height]="600"
       dataCellTemplate="dataCellTemplate"
+      appointmentTemplate='appointment-template'
     >
     <div *dxTemplate="let dateCell of 'dateCellTemplate'"[ngClass]="{'disable-date': isWeekend(dateCell.date) }">{{dateCell.text}}</div>
-    <div *dxTemplate="let dataCell of 'dataCellTemplate'"[ngClass]="{'disable-date': isWeekend(dataCell.startDate)}">{{dataCell.text}}</div>
+    <div *dxTemplate="let dataCell of 'dataCellTemplate'"[ngClass]="{'disable-date': isHoliday(dataCell.startDate) || isWeekend(dataCell.startDate)}">{{dataCell.text}}</div>
+    <div *dxTemplate='let model of "appointment-template"'>
+      <div class='movie'>
+          <img [src]='getMovieById(model.appointmentData.movieId).image' />
+          <div class='movie-text'>{{getMovieById(model.appointmentData.movieId).text}}</div>
+      </div>
+  </div>
+
   </dx-scheduler>
 
   </div>

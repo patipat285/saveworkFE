@@ -9,6 +9,8 @@ export class RequestService {
 
   private url: string = environment.apiUrl;
 
+
+
   constructor(public http: HttpClient) {}
 
   //--------------------------------Project-----------------------------------//
@@ -185,16 +187,20 @@ searchDataWork(data) {
 
 
 getHolidays() {
+  try {
+    return this.http.get(this.url + '/holiday/getDataHoliday');
+  } catch (error) {
+    console.log(' error', error);
+  }
+}
+
+
+getHolidays2() {
   return [
       new Date(2021, 4, 27),
       new Date(2021, 6, 4)
   ];
 }
-
-
-
-
-
 
 
 
