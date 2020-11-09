@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 const fs = require("fs");
 const frontEndPort = process.env.FE_PORT || 3303;
 const appIp = "0.0.0.0";
