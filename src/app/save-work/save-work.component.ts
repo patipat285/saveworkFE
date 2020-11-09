@@ -328,7 +328,6 @@ fnInsertInRow(dataClone){
   let data = _.unionBy(dataTemp, 'date')
   this.dataListWork = data;
 
-
 }
 
 
