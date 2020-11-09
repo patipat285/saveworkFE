@@ -5,10 +5,10 @@ const frontEndPort = process.env.FE_PORT || 3303;
 const appIp = '0.0.0.0';
 app.use(express.static( __dirname + '/dist/saveWork'));
 
-app.use('/saveWork', (req, res) => {
-    // console.log(path.join(__dirname, './dist/sgl-product-mgmt/index.html'));
-    res.sendFile(path.join(__dirname, './dist/saveWork/index.html'));
-  });
+// app.use('/saveWork', (req, res) => {
+//     // console.log(path.join(__dirname, './dist/sgl-product-mgmt/index.html'));
+//     res.sendFile(path.join(__dirname, './dist/saveWork/index.html'));
+//   });
 //use https
 // const https = require('https');
 // const key = fs.readFileSync(__dirname+'/ssl/the-cool-fe-key.pem');
