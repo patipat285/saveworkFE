@@ -1,9 +1,17 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const fs = require("fs");
 const frontEndPort = process.env.FE_PORT || 3303;
-const appIp = '0.0.0.0';
-app.use(express.static( __dirname + '/dist/saveWork'));
+const appIp = "0.0.0.0";
+app.use(express.static(__dirname + "/dist/saveWork"));
+
+app.use("/saveWork", (req, res) => {
+
+  console.log('11111');
+
+  // console.log(path.join(__dirname, './dist/sgl-product-mgmt/index.html'));
+  res.sendFile(path.join(__dirname, "./dist/saveWork/index.html"));
+});
 
 // app.use('/saveWork', (req, res) => {
 //     // console.log(path.join(__dirname, './dist/sgl-product-mgmt/index.html'));
@@ -24,5 +32,5 @@ app.use(express.static( __dirname + '/dist/saveWork'));
 
 //use http
 app.listen(frontEndPort, function () {
-    console.log('The Cool app listening on port ' + frontEndPort + '!');
+  console.log("The Cool app listening on port " + frontEndPort + "!");
 });
