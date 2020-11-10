@@ -6,8 +6,6 @@ import notify from 'devextreme/ui/notify';
 import Query from 'devextreme/data/query';
 import * as _ from 'lodash';
 
-
-
 @Component({
   selector: 'app-save-work',
   templateUrl: './save-work.component.html',
@@ -18,16 +16,25 @@ export class SaveWorkComponent implements OnInit {
   dataDropdownJobType: any = [];
   selectProject: any;
   displayModal = false;
+
   dataCreate: any = {
     date: new Date(Date()),
     project: '',
     jobType: '',
     detail: '',
-    timeIn: new Date('November 05, 1990 09:00:00'),
-    timeOut: new Date('November 05, 1990 18:00:00'),
+    timeIn: null,
+    timeOut: null
   };
 
-  dataListWork: any;
+
+  defaultStartDate = new Date();
+  defaultStopDate = new Date();
+
+  nowIn = moment().format('YYYY-MM-DD 09:00:00');
+  nowOut = moment().format('YYYY-MM-DD 18:00:00');
+
+
+  dataListWork: any = [];
   sumHour: any;
   sumTotalHour = 0;
   // mode = 'month';
@@ -35,17 +42,20 @@ export class SaveWorkComponent implements OnInit {
   headerPopup = '';
   idWork: any;
   searchFromDateFrom: any;
-  searchFromProject: any = "";
-  searchFromJobType: any = "";
+  searchFromProject: any = '';
+  searchFromJobType: any = '';
   submitted = false;
-  sat :any;
-  sun :any;
+  sat: any;
+  sun: any;
   disabledDates = null;
   moviesData: any;
-  holiday : any = [];
-  convertHoliday : any = [];
+  holiday: any = [];
+  convertHoliday: any = [];
 
-  constructor(private RequestService: RequestService) {}
+  constructor(private RequestService: RequestService) {
+    this.dataCreate.timeIn = moment(this.nowIn, 'YYYY-MM-DD HH:mm:ss', true).toDate();
+    this.dataCreate.timeOut = moment(this.nowOut, 'YYYY-MM-DD HH:mm:ss', true).toDate();
+  }
 
   ngOnInit() {
     this.fnGetDropdownProject();
@@ -53,7 +63,8 @@ export class SaveWorkComponent implements OnInit {
     this.fnGetDataWork();
     this.fnGetHoliday();
 
-   ;
+
+
   }
 
   fnGetDropdownProject() {
@@ -82,6 +93,9 @@ export class SaveWorkComponent implements OnInit {
 
   fnSubbmitSaveWork(id) {
     this.submitted = true;
+    let data: any = {};
+    let text;
+    data = this.dataCreate;
     if (
       this.dataCreate.date === null ||
       this.dataCreate.project === '' ||
@@ -99,11 +113,8 @@ export class SaveWorkComponent implements OnInit {
     }
     this.displayModal = false;
 
-    let data: any;
-    data = this.dataCreate;
-    let text;
-
     if (id) {
+      console.log('SaveWorkComponent -> fnSubbmitSaveWork -> id', id);
       text = 'Do you want to Update Work?';
     } else {
       text = 'Do you want to Create Work?';
@@ -122,15 +133,35 @@ export class SaveWorkComponent implements OnInit {
           this.RequestService.updateDataWork(this.idWork, data).subscribe(
             (data) => {
               Swal.fire('Success!', ' Update Success', 'success');
+              this.submitted = false;
+              this.dataCreate = {
+                date: new Date(Date()),
+                project: '',
+                jobType: '',
+                detail: '',
+                timeIn: null,
+                timeOut: null
+              };
+
               this.fnGetDataWork();
             }
           );
+        } else {
+          this.RequestService.saveWork(data).subscribe((data) => {
+            Swal.fire('Success!', 'Save Work Success', 'success');
+            this.dataCreate = {
+              date: new Date(Date()),
+              project: '',
+              jobType: '',
+              detail: '',
+              timeIn: null,
+              timeOut: null
+            };
+
+            this.submitted = false;
+            this.fnGetDataWork();
+          });
         }
-        this.RequestService.saveWork(data).subscribe((data) => {
-          Swal.fire('Success!', 'Save Work Success', 'success');
-          this.dataCreate = {};
-          this.fnGetDataWork();
-        });
       }
     });
   }
@@ -139,30 +170,31 @@ export class SaveWorkComponent implements OnInit {
     this.headerPopup = 'Update Work';
     this.displayModal = true;
     this.idWork = id;
+    let dataFromId: any = {};
     if (this.idWork) {
       this.RequestService.getDataWorkeByIdForUpdate(this.idWork).subscribe(
         (data) => {
-          console.log('SaveWorkComponent -> fnEditWork -> data', data);
-          this.dataCreate.date = moment(data['date']).format('DD-MM-YYYY');
-          this.dataCreate.detail = data['detail'];
-          this.dataCreate.jobType = data['jobType'];
-          this.dataCreate.project = data['project'];
-          this.dataCreate.timeIn = moment(data['timeIn']).format('HH:mm');
-          this.dataCreate.timeOut = moment(data['timeOut']).format('HH:mm');
-          console.log(
-            'SaveWorkComponent -> fnEditWork -> this.dataCreate',
-            this.dataCreate
-          );
+          dataFromId = data;
+          this.dataCreate.date = moment(dataFromId['date']).format('DD-MM-YYYY');
+          this.dataCreate.detail = dataFromId['detail'];
+          this.dataCreate.jobType = dataFromId['jobType'];
+          this.dataCreate.project = dataFromId['project'];
+          this.dataCreate.timeIn = moment(dataFromId['timeIn']).format('HH:mm');
+          this.dataCreate.timeOut = moment(dataFromId['timeOut']).format('HH:mm');
         }
       );
     }
   }
 
+
+
   //Get aLL data Work
   fnGetDataWork() {
-    this.RequestService.getAllDataWork().subscribe((data) => {
-      console.log('SaveWorkComponent -> fnGetDataWork -> data', data);
+      this.RequestService.getAllDataWork().subscribe((data) => {
+      console.log("SaveWorkComponent -> fnGetDataWork -> data", data)
       this.dataListWork = data;
+
+
       let sumtimeIN;
       let sumtimeOut;
       let datalist;
@@ -171,43 +203,34 @@ export class SaveWorkComponent implements OnInit {
       for (datalist of this.dataListWork) {
         sumtimeIN = moment(datalist.timeIn).format('yyyy-MM-DD HH:mm:ss');
         sumtimeOut = moment(datalist.timeOut).format('yyyy-MM-DD HH:mm:ss');
-        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(new Date(sumtimeIN),new Date(sumtimeOut));
+        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(
+          new Date(sumtimeIN),
+          new Date(sumtimeOut)
+        );
         datalist.hour = this.sumHour;
         sumTotal = sumTotal + datalist.hour;
         this.sumTotalHour = sumTotal;
         datalist.date = moment(datalist.date).format('DD-MM-YYYY');
-        datalist.timeIn = moment(datalist.timeIn).format('HH:mm');
-        datalist.timeOut = moment(datalist.timeOut).format('HH:mm');
-        // if(datalist.date === datalist.date){
-        //   // datalist.detail = datalist.detail + datalist.detail
-        //   // console.log("SaveWorkComponent -> fnGetDataWork -> datalist.detail", datalist.detail)
-        // }
+        datalist.timeIn = moment(datalist.timeIn).format('HH:mm')
+        datalist.timeOut = moment(datalist.timeOut).format('HH:mm')
       }
-      let dataClone = _.cloneDeep(this.dataListWork)
-      this.fnInsertInRow(dataClone)
-      console.log('SaveWorkComponent -> fnGetDataWork -> this.dataListWork',this.dataListWork);
 
-
+      let dataClone = _.cloneDeep(this.dataListWork);
+      this.fnInsertInRow(dataClone);
     });
   }
 
-
   //คำนวน ชั่วโมงจาก เวลา เข้า-ออก
   fnCalDiffHourFromTimeInTimeOut(startDate, endDate) {
-    var diff = endDate.getTime() - startDate.getTime();
-    var days = Math.floor(diff / (60 * 60 * 24 * 1000));
-    var hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
-    return hours - 1;
+    let diff = endDate.getTime() - startDate.getTime();
+    let days = Math.floor(diff / (60 * 60 * 24 * 1000));
+    let hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
+    if (hours === 9) {
+      return hours - 1;
+    } else {
+      return hours;
+    }
   }
-
-  //เลือกวันที่จากตาราง
-  // selectDate(event) {
-  // console.log("SaveWorkComponent -> selectDate -> event", event)
-
-  // this.headerPopup = 'Save Work'
-  // this.displayModal = true;
-  // this.dataCreate.date = event
-  // }
 
   fnDeleteWork(id) {
     Swal.fire({
@@ -222,6 +245,7 @@ export class SaveWorkComponent implements OnInit {
       if (result.value) {
         this.RequestService.deleteDataWork(id).subscribe((res) => {
           Swal.fire('Deleted!', 'delete success', 'success');
+          this.sumTotalHour = 0;
           this.fnGetDataWork();
         });
       }
@@ -230,7 +254,15 @@ export class SaveWorkComponent implements OnInit {
 
   closeModal() {
     this.displayModal = false;
-    this.dataCreate = {};
+    // this.dataCreate = {
+    //   date: new Date(Date()),
+    //   project: '',
+    //   jobType: '',
+    //   detail: '',
+    //   timeIn: null,
+    //   timeOut: null
+    // };
+    this.submitted = false;
   }
 
   fnSearchDataWork() {
@@ -239,10 +271,11 @@ export class SaveWorkComponent implements OnInit {
       searchFromProject: this.searchFromProject,
       searchFromJobType: this.searchFromJobType,
     };
+    console.log('SaveWorkComponent -> fnSearchDataWork -> searchWork',searchWork);
+
     this.RequestService.searchDataWork(searchWork).subscribe((data) => {
       let sumtimeIN;
       let sumtimeOut;
-      let datalist;
       let sumTotal = 0;
       this.dataListWork = data;
       for (const data of this.dataListWork) {
@@ -255,7 +288,7 @@ export class SaveWorkComponent implements OnInit {
         data.hour = this.sumHour;
         sumTotal = sumTotal + data.hour;
         this.sumTotalHour = sumTotal;
-        data.date = moment(data.date).format('DD-MM-YYYY');
+        data.date = moment(data.date).format('dd-mm-yy');
         data.timeIn = moment(data.timeIn).format('HH:mm');
         data.timeOut = moment(data.timeOut).format('HH:mm');
       }
@@ -263,108 +296,102 @@ export class SaveWorkComponent implements OnInit {
   }
 
   clickClear() {
-    this.fnGetDataWork();
     this.searchFromDateFrom = '';
     this.searchFromProject = '';
     this.searchFromJobType = '';
     this.sumTotalHour = 0;
+    this.fnGetDataWork();
   }
 
   closeModalDevxtream(event) {
-    console.log('SaveWorkComponent -> closeModalDevxtream -> event', event);
     event.cancel = true;
-      this.displayModal = true;
-      this.headerPopup = 'Save Work';
-      this.dataCreate.date = event.appointmentData.startDate;
-      this.dataCreate.timeIn = new Date('November 05, 1990 09:00:00')
-      this.dataCreate.timeOut = new Date('November 05, 1990 18:00:00')
-      this.dataCreate.project = ''
-      this.dataCreate.jobType = ''
-      this.dataCreate.detail = ''
-
+    this.displayModal = true;
+    this.headerPopup = 'Save Work';
+    this.dataCreate.date = event.appointmentData.startDate;
+    this.dataCreate.project = '';
+    this.dataCreate.jobType = '';
+    this.dataCreate.detail = '';
   }
-
 
   isWeekend(date: Date) {
     const day = date.getDay();
     return day === 0 || day === 6;
-}
-
-
-
-
-
-fnGetHoliday(){
- this.RequestService.getHolidays().subscribe((data) => {
-    this.holiday = data;
-    for (const iterator of this.holiday) {
-      let changeFormattDate  = moment(iterator.startDate).toDate();
-      this.convertHoliday.push(changeFormattDate)
-    }
-  })
-}
-
-
-isHoliday(date: Date) {
-  let localeDate = date.toLocaleDateString();
-  let holidays  =  this.convertHoliday;
-  return holidays.filter(holiday => {return holiday.toLocaleDateString() === localeDate;}).length > 0;
-}
-
-
-
-
-
-
-
-
-notifyDisableDate() {
-  Swal.fire({
-    icon: 'warning',
-    title: 'เป็นวันหยุด!!'
-  });
-}
-
-
-fnInsertInRow(dataClone){
-  let newData = _.groupBy(dataClone, 'date');
-  let dataTemp =[];
-  for (let key in newData) {
-      if (newData[key].length > 1) {
-        let m : any = {};
-        for (let iterator of newData[key]) {
-              m._id = iterator._id
-              m.date = iterator.date
-              m.timeIn = !m.timeIn ? '' + iterator.timeIn : `${m.timeIn}\n${iterator.timeIn}`
-              m.timeOut = !m.timeOut ? '' + iterator.timeOut : `${m.timeOut}\n${iterator.timeOut}`
-              m.project = !m.project ? '' + iterator.project : `${m.project}\n${iterator.project}`
-              m.hour = !m.hour ? '' + iterator.hour : `${m.hour}\n${iterator.hour}`
-              m.jobType = !m.jobType ? '' + iterator.jobType : `${m.jobType}\n${iterator.jobType}`
-              m.detail = !m.detail ? '' + iterator.detail : `${m.detail}\n${iterator.detail}`
-              dataTemp.push(m)
-
-          }
-      } else {
-          let r :any = {};
-          r._id = newData[key][0]._id
-          r.date = newData[key][0].date
-          r.timeIn = newData[key][0].timeIn
-          r.timeOut = newData[key][0].timeOut
-          r.project = newData[key][0].project
-          r.hour = newData[key][0].hour
-          r.jobType = newData[key][0].jobType
-          r.detail = newData[key][0].detail
-          dataTemp.push(r)
-      }
   }
-  let data = _.unionBy(dataTemp, 'date')
-  this.dataListWork = data;
 
+  fnGetHoliday() {
+    this.RequestService.getHolidays().subscribe((data) => {
+      this.holiday = data;
+      for (const iterator of this.holiday) {
+        let changeFormattDate = moment(iterator.startDate).toDate();
+        this.convertHoliday.push(changeFormattDate);
+      }
+    });
+  }
+
+  isHoliday(date: Date) {
+    let localeDate = date.toLocaleDateString();
+    let holidays = this.convertHoliday;
+    return (
+      holidays.filter((holiday) => {
+        return holiday.toLocaleDateString() === localeDate;
+      }).length > 0
+    );
+  }
+
+  notifyDisableDate() {
+    Swal.fire({
+      icon: 'warning',
+      title: 'เป็นวันหยุด!!',
+    });
+  }
+
+  fnInsertInRow(dataClone) {
+    let newData = _.groupBy(dataClone, 'date');
+    let dataTemp = [];
+
+    for (const key in newData) {
+      if (newData[key].length > 1) {
+        let dataListWorkNew1: any = {};
+        for (let data of newData[key]) {
+          dataListWorkNew1._id = data._id;
+          dataListWorkNew1.date = data.date;
+          dataListWorkNew1.timeIn = !dataListWorkNew1.timeIn
+            ? '' + data.timeIn
+            : `${dataListWorkNew1.timeIn}\n${data.timeIn}`;
+          dataListWorkNew1.timeOut = !dataListWorkNew1.timeOut
+            ? '' + data.timeOut
+            : `${dataListWorkNew1.timeOut}\n${data.timeOut}`;
+          dataListWorkNew1.project = !dataListWorkNew1.project
+            ? '' + data.project
+            : `${dataListWorkNew1.project}\n${data.project}`;
+          dataListWorkNew1.hour = !dataListWorkNew1.hour
+            ? '' + data.hour
+            : `${dataListWorkNew1.hour}\n${data.hour}`;
+          dataListWorkNew1.jobType = !dataListWorkNew1.jobType
+            ? '' + data.jobType
+            : `${dataListWorkNew1.jobType}\n${data.jobType}`;
+          dataListWorkNew1.detail = !dataListWorkNew1.detail
+            ? '' + data.detail
+            : `${dataListWorkNew1.detail}\n${data.detail}`;
+          dataTemp.push(dataListWorkNew1);
+        }
+      } else {
+        let dataListWorkNew2: any = {};
+        dataListWorkNew2._id = newData[key][0]._id;
+        dataListWorkNew2.date = newData[key][0].date;
+        dataListWorkNew2.timeIn = newData[key][0].timeIn;
+        dataListWorkNew2.timeOut = newData[key][0].timeOut;
+        dataListWorkNew2.project = newData[key][0].project;
+        dataListWorkNew2.hour = newData[key][0].hour;
+        dataListWorkNew2.jobType = newData[key][0].jobType;
+        dataListWorkNew2.detail = newData[key][0].detail;
+        dataTemp.push(dataListWorkNew2);
+      }
+    }
+
+    let dataListWorkNew3 = _.unionBy(dataTemp, 'date');
+    this.dataListWork = dataListWorkNew3;
+
+
+  }
 }
-
-
-
-}
-
-
-

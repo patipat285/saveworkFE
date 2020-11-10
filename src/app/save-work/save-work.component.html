@@ -223,8 +223,8 @@
        <td style="white-space: pre-wrap;">{{data.jobType}}</td>
        <td style="white-space: pre-wrap;">{{data.detail}}</td>
        <td style="white-space: pre-wrap;">{{data.hour}}</td>
-       <td style="white-space: pre-wrap;">{{data.timeIn  }}</td>
-       <td style="white-space: pre-wrap;">{{data.timeOut }}</td>
+       <td style="white-space: pre-wrap;">{{data.timeIn}}</td>
+       <td style="white-space: pre-wrap;">{{data.timeOut}}</td>
        <td>
          <!-- <button
            pButton
@@ -287,7 +287,7 @@
 [style]="{ width: '50%' }"
 [draggable]="false"
 [resizable]="false"
-[dismissableMask]="true"
+
 [header]="headerPopup"
 (onHide)="closeModal()"
 >
@@ -360,7 +360,7 @@
               hourFormat="24"
               timeOnly="true"
               inputId="timeonly"
-              [dateFormat]="'HH:mm'"
+              [defaultDate]="defaultStartDate"
               >
             </p-calendar>
             </div>
@@ -377,7 +377,7 @@
               [inputStyle]="{'width':'100%'}"
               timeOnly="true"
               inputId="timeonly"
-              [dateFormat]="'HH:mm'"
+              [defaultDate]="defaultStopDate"
 
               >
             </p-calendar>
