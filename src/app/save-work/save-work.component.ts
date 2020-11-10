@@ -55,6 +55,8 @@ export class SaveWorkComponent implements OnInit {
   constructor(private RequestService: RequestService) {
     this.dataCreate.timeIn = moment(this.nowIn, 'YYYY-MM-DD HH:mm:ss', true).toDate();
     this.dataCreate.timeOut = moment(this.nowOut, 'YYYY-MM-DD HH:mm:ss', true).toDate();
+    console.log("SaveWorkComponent -> constructor -> this.dataCreate", this.dataCreate)
+    
   }
 
   ngOnInit() {
@@ -96,6 +98,7 @@ export class SaveWorkComponent implements OnInit {
     let data: any = {};
     let text;
     data = this.dataCreate;
+    console.log("SaveWorkComponent -> fnSubbmitSaveWork -> data", data)
     if (
       this.dataCreate.date === null ||
       this.dataCreate.project === '' ||
@@ -134,29 +137,17 @@ export class SaveWorkComponent implements OnInit {
             (data) => {
               Swal.fire('Success!', ' Update Success', 'success');
               this.submitted = false;
-              this.dataCreate = {
-                date: new Date(Date()),
-                project: '',
-                jobType: '',
-                detail: '',
-                timeIn: null,
-                timeOut: null
-              };
-
               this.fnGetDataWork();
             }
           );
         } else {
           this.RequestService.saveWork(data).subscribe((data) => {
             Swal.fire('Success!', 'Save Work Success', 'success');
-            this.dataCreate = {
-              date: new Date(Date()),
-              project: '',
-              jobType: '',
-              detail: '',
-              timeIn: null,
-              timeOut: null
-            };
+              this.dataCreate.project = '';
+              this.dataCreate.jobType = '';
+              this.dataCreate.detail = '';
+              this.dataCreate.timeIn = null ;
+              this.dataCreate.timeOut = null;
 
             this.submitted = false;
             this.fnGetDataWork();
@@ -175,12 +166,13 @@ export class SaveWorkComponent implements OnInit {
       this.RequestService.getDataWorkeByIdForUpdate(this.idWork).subscribe(
         (data) => {
           dataFromId = data;
-          this.dataCreate.date = moment(dataFromId['date']).format('DD-MM-YYYY');
-          this.dataCreate.detail = dataFromId['detail'];
-          this.dataCreate.jobType = dataFromId['jobType'];
-          this.dataCreate.project = dataFromId['project'];
-          this.dataCreate.timeIn = moment(dataFromId['timeIn']).format('HH:mm');
-          this.dataCreate.timeOut = moment(dataFromId['timeOut']).format('HH:mm');
+          console.log("SaveWorkComponent -> fnEditWork -> dataFromId", dataFromId)
+          this.dataCreate.date = dataFromId.date
+          // this.dataCreate.detail = dataFromId['detail'];
+          // this.dataCreate.jobType = dataFromId['jobType'];
+          // this.dataCreate.project = dataFromId['project'];
+          // this.dataCreate.timeIn = dataFromId['timeIn'];
+          // this.dataCreate.timeOut = dataFromId['timeOut'];
         }
       );
     }
@@ -202,7 +194,9 @@ export class SaveWorkComponent implements OnInit {
 
       for (datalist of this.dataListWork) {
         sumtimeIN = moment(datalist.timeIn).format('yyyy-MM-DD HH:mm:ss');
+        // console.log("SaveWorkComponent -> fnGetDataWork -> sumtimeIN", sumtimeIN)
         sumtimeOut = moment(datalist.timeOut).format('yyyy-MM-DD HH:mm:ss');
+        // console.log("SaveWorkComponent -> fnGetDataWork -> sumtimeOut", sumtimeOut)
         this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(
           new Date(sumtimeIN),
           new Date(sumtimeOut)
@@ -214,6 +208,7 @@ export class SaveWorkComponent implements OnInit {
         datalist.timeIn = moment(datalist.timeIn).format('HH:mm')
         datalist.timeOut = moment(datalist.timeOut).format('HH:mm')
       }
+     
 
       let dataClone = _.cloneDeep(this.dataListWork);
       this.fnInsertInRow(dataClone);
