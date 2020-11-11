@@ -95,6 +95,7 @@
                     placeholder="search Job type"
                     [(ngModel)]="searchJobTypeName"
                     name="textSearchJobType"
+                    required
                   />
                   <i class="fas fa-search" aria-hidden="true"></i>
                 </div>
@@ -109,6 +110,7 @@
                  <label  class="col-2 col-form-label">Code</label>
                 <div class="col">
                   <input
+                  required
                     type="text"
                     class="form-control"
                     id="textCode"
@@ -273,7 +275,7 @@
             </div>
           </div>
           <div class="col-12" style="text-align: left">
-            <button (click)="fnSubmit(this.idJobType)"  type="submit"  class="btn btn-primary">Save</button>
+            <button (click)="fnSubmit()"  type="submit"  class="btn btn-primary">Save</button>
             <span>&nbsp;</span>
             <button (click)="closeModal()" type="submit"  class="btn btn-primary">Cancel</button>
           </div>

@@ -15,7 +15,7 @@ export class JobtypeComponent implements OnInit {
   headerPopup = '';
   jobTypeName = '';
   code = '';
-  idJobType: any;
+  idJobType = null;
   dataListJobType: any;
   searchJobTypeName = '';
   searchCode = '';
@@ -24,15 +24,11 @@ export class JobtypeComponent implements OnInit {
   codeDetail: any;
   submitted = false;
 
-
   constructor(private RequestService: RequestService) {}
 
   ngOnInit() {
     this.fnGetDataJobType();
   }
-
-
-
 
   //popup Create / edit
   fnCreateAndEditJobtype() {
@@ -40,50 +36,60 @@ export class JobtypeComponent implements OnInit {
     this.headerPopup = 'Create Job Type';
   }
 
-
-
-  fnSubmit(id) {
+  fnSubmit() {
     this.submitted = true;
-    if(this.jobTypeName == undefined || this.jobTypeName === '' || this.code == undefined || this.code === ''){
+    if (
+      this.jobTypeName == undefined ||
+      this.jobTypeName === '' ||
+      this.code == undefined ||
+      this.code === ''
+    ) {
       Swal.fire({
         icon: 'warning',
         title: 'required field',
         text: 'กรุณากรอกข้อมูล',
-
-       })
-       return
-     }
+      });
+      return;
+    }
     this.displayModal = false;
     let data = {
       jobTypeName: this.jobTypeName,
       code: this.code,
     };
-    let text;
+
     this.fnCheckDupJobType(data);
-    if (id) {
-      text = 'Do you want to Update Job Type?';
-    } else {
-      text = 'Do you want to Create Job Type?';
-    }
-    Swal.fire({
-      title: 'Are you sure?',
-      text: text,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Confirm it!',
-    }).then((result) => {
-      if (result.isConfirmed === true) {
-        if (this.idJobType) {
+    if (this.idJobType) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to Update Job Type?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Confirm it!',
+      }).then((result) => {
+        if (result.isConfirmed === true) {
           this.RequestService.updateDataJobType(this.idJobType, data).subscribe(
             (data) => {
               Swal.fire('Success!', 'Update Job Type Success', 'success');
               this.submitted = false;
+              this.idJobType = null;
               this.fnGetDataJobType();
             }
           );
-        } else {
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to Create Job Type?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Confirm it!',
+      }).then((result) => {
+        if (result.isConfirmed === true) {
           this.RequestService.createJobType(data).subscribe((data) => {
             Swal.fire('Success!', 'Create Job Type Success', 'success');
             this.submitted = false;
@@ -92,10 +98,9 @@ export class JobtypeComponent implements OnInit {
             this.fnGetDataJobType();
           });
         }
-      }
-    });
+      });
+    }
   }
-
 
   //Get aLL data project
   fnGetDataJobType() {
@@ -109,21 +114,19 @@ export class JobtypeComponent implements OnInit {
   }
 
   fnEditProject(id) {
-    this.headerPopup = 'Update Project';
-    this.displayModal = true;
     this.idJobType = id;
+    this.displayModal = true;
+    this.headerPopup = 'Update Project';
     if (this.idJobType) {
       this.RequestService.getDataJobTypeByIdForUpdate(this.idJobType).subscribe(
         (data) => {
-          console.log('JobtypeComponent -> fnEditProject -> data', data);
+
           this.jobTypeName = data['jobTypeName'];
           this.code = data['code'];
         }
       );
     }
   }
-
-
 
   fnDeleteJobType(id) {
     Swal.fire({
@@ -136,7 +139,7 @@ export class JobtypeComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.value) {
-          this.RequestService.deleteDataJobType(id).subscribe((res) => {
+        this.RequestService.deleteDataJobType(id).subscribe((res) => {
           Swal.fire('Deleted!', 'delete Job Type success', 'success');
           this.fnGetDataJobType();
         });
@@ -144,9 +147,9 @@ export class JobtypeComponent implements OnInit {
     });
   }
 
-
-
   fnSearchDataJobType() {
+
+
     let searchJobType = {
       jobTypeName: this.searchJobTypeName,
       code: this.searchCode,
@@ -156,8 +159,6 @@ export class JobtypeComponent implements OnInit {
     });
   }
 
-
-
   closeModal() {
     this.displayModal = false;
     this.jobTypeName = '';
@@ -165,14 +166,11 @@ export class JobtypeComponent implements OnInit {
     this.submitted = false;
   }
 
-
-
   clickClear() {
     this.searchJobTypeName = '';
     this.searchCode = '';
     this.fnGetDataJobType();
   }
-
 
   fnShowDetailData(id) {
     this.displayModalDetail = true;
@@ -186,7 +184,6 @@ export class JobtypeComponent implements OnInit {
       );
     }
   }
-
 
   fnCheckDupJobType(datachek) {
     let checkDup = {
@@ -203,7 +200,7 @@ export class JobtypeComponent implements OnInit {
         } else if (check.code === checkDup.code) {
           textError = 'Code นี้มีอยู่แล้ว';
         }
-        if(textError){
+        if (textError) {
           Swal.fire({
             icon: 'error',
             title: 'ข้อมูลซ้ำ',
