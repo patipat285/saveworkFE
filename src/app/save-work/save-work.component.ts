@@ -39,7 +39,7 @@ export class SaveWorkComponent implements OnInit {
   sumTotalHour = 0;
   headerPopup = '';
   idWork= null;
-  searchFromDateFrom = new Date(Date());
+  searchFromDateFrom :any;
   searchFromProject: any = '';
   searchFromJobType: any = '';
   submitted = false;
@@ -56,7 +56,7 @@ export class SaveWorkComponent implements OnInit {
     this.dataCreate.timeIn  = moment(this.nowIn, 'YYYY-MM-DD HH:mm', true).toDate();
     this.dataCreate.timeOut = moment(this.nowOut, 'YYYY-MM-DD HH:mm', true).toDate();
 
-    console.log("SaveWorkComponent -> constructor -> this.dataCreate", this.dataCreate)
+    // console.log("SaveWorkComponent -> constructor -> this.dataCreate", this.dataCreate)
 
   }
 
@@ -134,11 +134,11 @@ export class SaveWorkComponent implements OnInit {
         timeIn : this.dataCreate.timeIn,
         timeOut : this.dataCreate.timeOut
       }
-      console.log("SaveWorkComponent -> fnSubbmitSaveWork -> data", data)
+      // console.log("SaveWorkComponent -> fnSubbmitSaveWork -> data", data)
 
 
     if (this.idWork) {
-      console.log("SaveWorkComponent -> fnSubbmitSaveWork -> idforupdate", this.idWork)
+      // console.log("SaveWorkComponent -> fnSubbmitSaveWork -> idforupdate", this.idWork)
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Update Work?',
@@ -200,7 +200,7 @@ export class SaveWorkComponent implements OnInit {
           this.dataCreate.project = data['project'];
           this.dataCreate.timeIn = moment(data['timeIn']).toDate()
           this.dataCreate.timeOut = moment(data['timeOut']).toDate()
-          console.log("SaveWorkComponent -> fnEditWork -> this.dataCreate", this.dataCreate)
+          // console.log("SaveWorkComponent -> fnEditWork -> this.dataCreate", this.dataCreate)
         }
       );
     }
@@ -215,7 +215,7 @@ export class SaveWorkComponent implements OnInit {
       this.RequestService.getAllDataWork().subscribe((data) => {
 
       this.dataListWork = data;
-      console.log("SaveWorkComponent -> fnGetDataWork -> this.dataListWork.length", this.dataListWork.length)
+      // console.log("SaveWorkComponent -> fnGetDataWork -> this.dataListWork.length", this.dataListWork.length)
       if(this.dataListWork.length === 0) {
         this.sumTotalHour = 0;
       }
@@ -240,7 +240,7 @@ export class SaveWorkComponent implements OnInit {
 
       }
       // this.onSort();
-      console.log("======> this.dataListWork : : : : :", this.dataListWork);
+      // console.log("======> this.dataListWork : : : : :", this.dataListWork);
       // this.dataclone = _.cloneDeep(this.dataListWork);
       // let dataClone = _.cloneDeep(this.dataListWork);
       // this.fnInsertInRow(dataClone);
@@ -311,17 +311,20 @@ export class SaveWorkComponent implements OnInit {
 
   fnSearchDataWork() {
     let searchWork = {
-      searchFromDateFrom: moment(this.searchFromDateFrom).format(),
-    };
-
-    let searchWork2 = {
+      searchFromDateFrom: this.searchFromDateFrom,
       searchFromProject: this.searchFromProject,
       searchFromJobType: this.searchFromJobType,
-    }
-    console.log("SaveWorkComponent -> fnSearchDataWork -> searchWork", searchWork)
+    };
+    // console.log("SaveWorkComponent -> fnSearchDataWork -> searchWork", searchWork)
+
+    // let searchWork2 = {
+
+    // }
+    // console.log("SaveWorkComponent -> fnSearchDataWork -> searchWork2", searchWork2)
+    // console.log("SaveWorkComponent -> fnSearchDataWork -> searchWork", searchWork)
 
 
-    this.RequestService.searchDataWork(searchWork,searchWork2).subscribe((data) => {
+    this.RequestService.searchDataWork(searchWork).subscribe((data) => {
       let sumtimeIN;
       let sumtimeOut;
       let sumTotal = 0;
@@ -354,7 +357,7 @@ export class SaveWorkComponent implements OnInit {
 
 
   clickClear() {
-    this.searchFromDateFrom =  new Date(Date());
+    this.searchFromDateFrom =  null;
     this.searchFromProject = '';
     this.searchFromJobType = '';
     this.sumTotalHour = 0;
@@ -365,7 +368,8 @@ export class SaveWorkComponent implements OnInit {
 
 
   closeModalDevxtream(event) {
-    console.log("SaveWorkComponent -> closeModalDevxtream -> event", event)
+    // console.log("SaveWorkComponent -> closeModalDevxtream -> event", event)
+
     event.cancel = true;
     this.displayModal = true;
     this.headerPopup = 'Save Work';
@@ -504,7 +508,7 @@ export class SaveWorkComponent implements OnInit {
         }
     }
 
-    console.log("SaveWorkComponent -> updateRowGroupMetaData -> rowGroupMetadata", this.rowGroupMetadata)
+    // console.log("SaveWorkComponent -> updateRowGroupMetaData -> rowGroupMetadata", this.rowGroupMetadata)
 }
 
 

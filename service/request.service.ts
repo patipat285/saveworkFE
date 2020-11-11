@@ -178,14 +178,13 @@ deleteDataWork(id) {
   }
 }
 
-searchDataWork(data1,data2) {
-  // console.log("RequestService -> searchDataWork -> data", data)
+searchDataWork(data) {
+
   try {
-    if(data1){
-      return this.http.post(this.url + '/saveWork/searchListWork', data1);
-    }else if(data2){
-      return this.http.post(this.url + '/saveWork/searchListWork', data2);   
-    }
+
+      return this.http.post(this.url + '/saveWork/searchListWork', data);
+
+
   } catch (error) {
     console.log(' error', error);
   }
