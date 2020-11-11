@@ -312,16 +312,16 @@ export class SaveWorkComponent implements OnInit {
   fnSearchDataWork() {
     let searchWork = {
       searchFromDateFrom: moment(this.searchFromDateFrom).format(),
-      searchFromProject: this.searchFromProject,
-      searchFromJobType: this.searchFromJobType,
     };
 
+    let searchWork2 = {
+      searchFromProject: this.searchFromProject,
+      searchFromJobType: this.searchFromJobType,
+    }
+    console.log("SaveWorkComponent -> fnSearchDataWork -> searchWork", searchWork)
 
-    this.RequestService.searchDataWork(searchWork).subscribe((data) => {
 
-
-
-
+    this.RequestService.searchDataWork(searchWork,searchWork2).subscribe((data) => {
       let sumtimeIN;
       let sumtimeOut;
       let sumTotal = 0;
@@ -329,6 +329,7 @@ export class SaveWorkComponent implements OnInit {
       if(this.dataListWork.length === 0) {
         this.sumTotalHour = 0;
       }
+      this.dataListWork = _.sortBy(this.dataListWork, ['date']);
       for (const data of this.dataListWork) {
         sumtimeIN = moment(data.timeIn).format('yyyy-MM-DD HH:mm:ss');
         sumtimeOut = moment(data.timeOut).format('yyyy-MM-DD HH:mm:ss');

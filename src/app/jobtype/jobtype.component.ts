@@ -17,8 +17,8 @@ export class JobtypeComponent implements OnInit {
   code = '';
   idJobType: any;
   dataListJobType: any;
-  searchJobTypeName: any;
-  searchCode: any;
+  searchJobTypeName = '';
+  searchCode = '';
   displayModalDetail = false;
   jobTypeNameDetail: any;
   codeDetail: any;
@@ -168,9 +168,9 @@ export class JobtypeComponent implements OnInit {
 
 
   clickClear() {
-    this.fnGetDataJobType();
     this.searchJobTypeName = '';
     this.searchCode = '';
+    this.fnGetDataJobType();
   }
 
 
