@@ -50,7 +50,7 @@ body{
      background-color: rgb(28, 90, 169);
   }
 
-  .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+  .p-datatable.p-datatable .p-datatable-thead > tr > th {
     border-width: 1px 1px 1px 1px;
     background-color:  rgb(28, 90, 169);
     color: white;

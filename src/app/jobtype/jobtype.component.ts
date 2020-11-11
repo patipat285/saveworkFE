@@ -79,12 +79,14 @@ export class JobtypeComponent implements OnInit {
           this.RequestService.updateDataJobType(this.idJobType, data).subscribe(
             (data) => {
               Swal.fire('Success!', 'Update Job Type Success', 'success');
+              this.submitted = false;
               this.fnGetDataJobType();
             }
           );
         } else {
           this.RequestService.createJobType(data).subscribe((data) => {
             Swal.fire('Success!', 'Create Job Type Success', 'success');
+            this.submitted = false;
             this.jobTypeName = '';
             this.code = '';
             this.fnGetDataJobType();

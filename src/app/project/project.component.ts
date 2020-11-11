@@ -15,7 +15,7 @@ export class ProjectComponent implements OnInit {
   displayModal: boolean = false;
   projectName ='' ;
   dataListProject: any;
-  idProject: any;
+  idProject = null;
   headerPopup = ''
   datatablecopy : any;
   searchProjectName : any;
@@ -40,7 +40,7 @@ export class ProjectComponent implements OnInit {
     this.headerPopup = 'Create Project'
   }
 
-   fnSubmit(id) {
+   fnSubmit() {
      this.submitted = true;
      if(this.projectName == undefined || this.projectName === ''){
        Swal.fire({
@@ -59,7 +59,7 @@ export class ProjectComponent implements OnInit {
     this.fnCheckDupProject(data)
 
 
-    if (id) {
+    if (this.idProject) {
       text = "Do you want to Update Project?"
     } else {
       text = "Do you want to Create Project?"
@@ -77,11 +77,14 @@ export class ProjectComponent implements OnInit {
         if(this.idProject){
           this.RequestService.updateDataProject(this.idProject,data).subscribe((data) => {
             Swal.fire('Success!', 'Update Project Success', 'success');
+            this.submitted = false;
+            this.idProject = null;
             this.fnGetDataProject()
           });
         }
         this.RequestService.createProject(data).subscribe((data) => {
           Swal.fire('Success!', 'Create Project Success', 'success');
+          this.submitted = false;
           this.projectName = '';
           this.fnGetDataProject()
         });
@@ -102,9 +105,9 @@ export class ProjectComponent implements OnInit {
 
 
   fnEditProject(id) {
-    this.headerPopup = 'Update Project'
-    this.displayModal = true;
     this.idProject = id;
+    this.displayModal = true;
+    this.headerPopup = 'Update Project'
     if (this.idProject) {
       this.RequestService.getDataProjectByIdForUpdate(this.idProject).subscribe(
         (data) => {

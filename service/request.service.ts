@@ -134,6 +134,7 @@ export class RequestService {
 
 
  saveWork(data: any) {
+  console.log("RequestService -> saveWork -> data", data)
   try {
     return this.http.post(this.url + '/saveWork/createWork', data);
   } catch (error) {
@@ -178,6 +179,7 @@ deleteDataWork(id) {
 }
 
 searchDataWork(data) {
+  // console.log("RequestService -> searchDataWork -> data", data)
   try {
     return this.http.post(this.url + '/saveWork/searchListWork', data);
   } catch (error) {
