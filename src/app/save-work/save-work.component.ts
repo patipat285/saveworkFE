@@ -546,7 +546,6 @@ if(hoursDiff === 9){
 
 
 calculate(){
-
 let data :any  = {
   date : moment(this.dataCreate.date).format('YYYY-MM-DD'),
   project : this.dataCreate.project,
@@ -555,35 +554,50 @@ let data :any  = {
   timeIn : this.dataCreate.timeIn,
   timeOut : this.dataCreate.timeOut
 }
+console.log("SaveWorkComponent -> calculate -> data", data)
 
+let a = moment(data.timeIn).format("HH:mm") 
+let b = moment(data.timeOut).format("HH:mm") 
 
-let date1 = new Date(data.timeOut).getTime();
-console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
-let date2 = new Date(data.timeIn).getTime();
-console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
-let time = date1 - date2;  //msec
-console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> time", time)
-let hoursDiff = time / (3600 * 1000);
-console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
-
-
-
-
-if(hoursDiff === 12){
-  // this.sumTotalHourtext =  hoursDiff -1
-  let a;
-  a = Math.round(hoursDiff*100)/100;
-  console.log("SaveWorkComponent -> calculate -> a", a)
-  this.sumTotalHourtext = a -1
-
-}else if(hoursDiff === 13 ) {
-  // this.sumTotalHourtext = hoursDiff
-  let b;
-  b = Math.round(hoursDiff*100)/100;
-  console.log("SaveWorkComponent -> calculate -> b", b)
-   this.sumTotalHourtext  = b
-  // console.log("SaveWorkComponent -> calculate -> this.sumTotalHourtext", this.sumTotalHourtext)
+if(a === "12:00" && b === "13:00"){
+  this.sumTotalHourtext = "0"
+  return
 }
+
+let getTimeout = data.timeOut.getTime();//มิลลิวินาที
+let getTimein = data.timeIn.getTime();//มิลลิวินาที
+let time = getTimeout - getTimein;  //มิลลิวินาที
+let hoursDiff = time / (3600 * 1000); //หารเอาจำนวนเต็ม
+console.log("SaveWorkComponent -> calculate -> hoursDiff", hoursDiff)
+
+if(hoursDiff === 9){
+  this.sumTotalHourtext =  hoursDiff -1
+}else{
+  this.sumTotalHourtext =  Math.round(hoursDiff*100)/100;
+}
+console.log("SaveWorkComponent -> calculate -> this.sumTotalHourtext", this.sumTotalHourtext)
+}
+
+
+
+
+
+
+// if(hoursDiff === 12){
+//   // this.sumTotalHourtext =  hoursDiff -1
+//   let a;
+//   a = Math.round(hoursDiff*100)/100;
+//   console.log("SaveWorkComponent -> calculate -> a", a)
+//   this.sumTotalHourtext = a -1
+
+// }else if(hoursDiff === 13 ) {
+//   // this.sumTotalHourtext = hoursDiff
+//   let b;
+//   b = Math.round(hoursDiff*100)/100;
+//   console.log("SaveWorkComponent -> calculate -> b", b)
+//    this.sumTotalHourtext  = b
+//   // console.log("SaveWorkComponent -> calculate -> this.sumTotalHourtext", this.sumTotalHourtext)
+// }
 
 //   let date1 = new Date(endDate).getTime();
 // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
@@ -603,7 +617,7 @@ if(hoursDiff === 12){
 
 
 
-}
+
 
 
 }

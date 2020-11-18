@@ -57,8 +57,9 @@ export class JobtypeComponent implements OnInit {
       code: this.code,
     };
 
-    this.fnCheckDupJobType(data);
+    this.fnCheckDupJobType(data, this.idJobType);
     if (this.idJobType) {
+    
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Update Job Type?',
@@ -80,6 +81,7 @@ export class JobtypeComponent implements OnInit {
         }
       });
     } else {
+     
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Create Job Type?',
@@ -148,8 +150,6 @@ export class JobtypeComponent implements OnInit {
   }
 
   fnSearchDataJobType() {
-
-
     let searchJobType = {
       jobTypeName: this.searchJobTypeName,
       code: this.searchCode,
@@ -185,7 +185,8 @@ export class JobtypeComponent implements OnInit {
     }
   }
 
-  fnCheckDupJobType(datachek) {
+  fnCheckDupJobType(datachek, id) {
+    let idcheck = id;
     let checkDup = {
       jobTypeName: datachek.jobTypeName,
       code: datachek.code,
@@ -195,19 +196,24 @@ export class JobtypeComponent implements OnInit {
       let dataForCheckDup: any = data;
       let textError;
       for (const check of dataForCheckDup) {
-        if (check.jobTypeName === checkDup.jobTypeName) {
-          textError = 'Job Type Name นี้มีอยู่แล้ว';
-        } else if (check.code === checkDup.code) {
-          textError = 'Code นี้มีอยู่แล้ว';
+        if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code)){
+          textError = 'ข้อมูลนี้มีอยู่แล้ว';
         }
-        if (textError) {
-          Swal.fire({
-            icon: 'error',
-            title: 'ข้อมูลซ้ำ',
-            text: textError,
-          });
-        }
+        // if (check.jobTypeName === checkDup.jobTypeName) {
+        //   textError = 'Job Type Name นี้มีอยู่แล้ว';
+        // } else if (check.code === checkDup.code) {
+        //   textError = 'Code นี้มีอยู่แล้ว';
+        // }
+      
       }
+      if (textError) {
+        Swal.fire({
+          icon: 'error',
+          title: 'ข้อมูลซ้ำ',
+          text: textError,
+        });
+      }
+
     });
   }
 }

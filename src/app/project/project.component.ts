@@ -56,7 +56,7 @@ export class ProjectComponent implements OnInit {
       projectName: this.projectName
     };
 
-    this.fnCheckDupProject(data)
+   
 
 
     if (this.idProject) {
@@ -82,6 +82,7 @@ export class ProjectComponent implements OnInit {
       });
 
     } else {
+      this.fnCheckDupProject(data)
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Create Project?',
@@ -110,6 +111,7 @@ export class ProjectComponent implements OnInit {
   fnGetDataProject() {
     this.RequestService.getAllDataProject().subscribe((data) => {
       this.dataListProject = data;
+     
 
     });
   }
