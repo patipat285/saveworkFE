@@ -154,9 +154,6 @@ export class ProjectComponent implements OnInit {
 
 
   fnSearchDataProject() {
-
-
-
     let searchProject = {
       projectName: this.searchProjectName
     };
@@ -175,10 +172,10 @@ export class ProjectComponent implements OnInit {
     this.submitted = false;
   }
 
+
   clickClear(){
     this.fnGetDataProject();
     this.searchProjectName = ''
-
   }
 
 

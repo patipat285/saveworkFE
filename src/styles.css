@@ -45,12 +45,15 @@ body{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   }
 
+  h1 label h5 h2 h3 h4 div  {
+    font-family: 'Quicksand', sans-serif !important;
+  }
 
   #footer{
      background-color: rgb(28, 90, 169);
   }
 
-  .p-datatable.p-datatable .p-datatable-thead > tr > th {
+  .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
     border-width: 1px 1px 1px 1px;
     background-color:  rgb(28, 90, 169);
     color: white;

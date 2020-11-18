@@ -51,6 +51,7 @@ export class SaveWorkComponent implements OnInit {
   convertHoliday: any = [];
   rowGroupMetadata: any;
   dataclone : any;
+  sumTotalHourtext :any;
 
   constructor(private RequestService: RequestService) {
     this.dataCreate.timeIn  = moment(this.nowIn, 'YYYY-MM-DD HH:mm', true).toDate();
@@ -239,11 +240,7 @@ export class SaveWorkComponent implements OnInit {
         datalist.timeOut = moment(datalist.timeOut).format('HH:mm')
 
       }
-      // this.onSort();
-      // console.log("======> this.dataListWork : : : : :", this.dataListWork);
-      // this.dataclone = _.cloneDeep(this.dataListWork);
-      // let dataClone = _.cloneDeep(this.dataListWork);
-      // this.fnInsertInRow(dataClone);
+
 
     });
   }
@@ -253,14 +250,50 @@ export class SaveWorkComponent implements OnInit {
 
   //คำนวน ชั่วโมงจาก เวลา เข้า-ออก
   fnCalDiffHourFromTimeInTimeOut(startDate, endDate) {
-    let diff = endDate.getTime() - startDate.getTime();
-    let days = Math.floor(diff / (60 * 60 * 24 * 1000));
-    let hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
-    if (hours === 9) {
-      return hours - 1;
-    } else {
-      return hours;
-    }
+    // let diff = endDate.getTime() - startDate.getTime();
+    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> startDate.getTime()", startDate.getTime())
+    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> endDate.getTime()", endDate.getTime())
+    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> diff", diff)
+    // let days = Math.floor(diff / (60 * 60 * 24 * 1000));
+    // let hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
+    // console.log("hours ====>", hours);
+
+    // if (hours === 9) {
+    //   return hours - 1;
+    // } else if (hours < 9) {
+    //   return hours;
+    // }
+
+let date1 = new Date(endDate).getTime();
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
+let date2 = new Date(startDate).getTime();
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
+let time = date1 - date2;  //msec
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> time", time)
+let hoursDiff = time / (3600 * 1000);
+console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
+
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
+
+if(hoursDiff === 9){
+  return hoursDiff -1
+}else{
+ return hoursDiff
+}
+
+
+
+
+
+    // const date1 = endDate.getTime();
+    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
+    // const date2 = startDate.getTime();
+    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
+
+    // const diffInMs = Date.parse(date2) - Date.parse(date1);
+    // const diffInHours = diffInMs / 1000 / 60 / 60;
+
+    // console.log(diffInHours);
   }
 
 
@@ -512,6 +545,65 @@ export class SaveWorkComponent implements OnInit {
 }
 
 
+calculate(){
+
+let data :any  = {
+  date : moment(this.dataCreate.date).format('YYYY-MM-DD'),
+  project : this.dataCreate.project,
+  jobType : this.dataCreate.jobType,
+  detail : this.dataCreate.detail,
+  timeIn : this.dataCreate.timeIn,
+  timeOut : this.dataCreate.timeOut
+}
+
+
+let date1 = new Date(data.timeOut).getTime();
+console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
+let date2 = new Date(data.timeIn).getTime();
+console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
+let time = date1 - date2;  //msec
+console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> time", time)
+let hoursDiff = time / (3600 * 1000);
+console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
+
+
+
+
+if(hoursDiff === 12){
+  // this.sumTotalHourtext =  hoursDiff -1
+  let a;
+  a = Math.round(hoursDiff*100)/100;
+  console.log("SaveWorkComponent -> calculate -> a", a)
+  this.sumTotalHourtext = a -1
+
+}else if(hoursDiff === 13 ) {
+  // this.sumTotalHourtext = hoursDiff
+  let b;
+  b = Math.round(hoursDiff*100)/100;
+  console.log("SaveWorkComponent -> calculate -> b", b)
+   this.sumTotalHourtext  = b
+  // console.log("SaveWorkComponent -> calculate -> this.sumTotalHourtext", this.sumTotalHourtext)
+}
+
+//   let date1 = new Date(endDate).getTime();
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
+// let date2 = new Date(startDate).getTime();
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
+// let time = date1 - date2;  //msec
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> time", time)
+// let hoursDiff = time / (3600 * 1000);
+
+// console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
+
+// if(hoursDiff === 9){
+//   return hoursDiff -1
+// }else{
+//  return hoursDiff
+// }
+
+
+
+}
 
 
 }

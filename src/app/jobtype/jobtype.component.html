@@ -65,6 +65,16 @@
               class="p-button-raised p-button p-button-rounded" >
               </button>
           </li>
+          <li class="nav-item">
+            <button
+            pButton
+            pRipple
+            label="Cal Hours"
+
+            [routerLink]="['/calhour']"
+            class="p-button-raised p-button p-button-rounded" >
+            </button>
+        </li>
 
         </ul>
       </div>
@@ -161,7 +171,7 @@
 
         <div class="card">
           <p-table
-            styleClass="p-datatable-sm p-datatable-gridlines"
+            styleClass="p-datatable-sm"
             [resizableColumns]="true"
             [value]="dataListJobType"
             [paginator]="true"

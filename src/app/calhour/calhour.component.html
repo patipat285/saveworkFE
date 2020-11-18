@@ -1,0 +1,152 @@
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1 id="welcome">Welcome to SAVEWORK</h1>
+    <p class="lead">create by patipat kultalay</p>
+  </div>
+  <img src="../../assets/pic/product.png" alt="" />
+</header>
+
+<div class="body">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+    <div class="container">
+      <button
+        [routerLink]="['/']"
+        pButton
+        pRipple
+        label="Home"
+        icon="pi pi-home"
+        class="p-button-raised p-button-warning p-button-rounded"
+      ></button>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button
+              [routerLink]="['/saveWork']"
+              pButton
+              pRipple
+              label="SAVEWORK"
+              class="p-button-raised p-button p-button-rounded"
+            ></button>
+          </li>
+          <li class="nav-item">
+            <button
+              pButton
+              pRipple
+              label="PROJECT"
+              [routerLink]="['/project']"
+              class="p-button-raised p-button-warning p-button-rounded"
+            ></button>
+          </li>
+          <li class="nav-item">
+            <button
+              pButton
+              pRipple
+              label="JOB TYPE"
+              [routerLink]="['/jobtype']"
+              class="p-button-raised p-button p-button-rounded"
+            ></button>
+          </li>
+          <li class="nav-item">
+            <button
+              pButton
+              pRipple
+              label="Cal Hours"
+              [routerLink]="['/calhour']"
+              class="p-button-raised p-button p-button-rounded"
+            ></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br />
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 style="text-align: center; color: #626262">CALHOURS</h5>
+        <br />
+        <form>
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+                <label  class="col-2 col-form-label">Time In</label>
+
+                <div class="col-sm-10">
+                  <p-calendar
+                    name="timeIn"
+                    [style]="{ width: '100%' }"
+                    [showTime]="true"
+                    hourFormat="24"
+                    timeOnly="true"
+                    inputId="timeonly"
+                  >
+                  </p-calendar>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+
+                <label  class="col-2 col-form-label">Time Out</label>
+                <div class="col-sm-10">
+                  <p-calendar
+                    name="timeOut"
+                    [style]="{ width: '100%' }"
+                    [showTime]="true"
+                    hourFormat="24"
+                    timeOnly="true"
+                    inputId="timeonly"
+                  >
+                  </p-calendar>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col text-center">
+            <button
+              pButton
+              type="button"
+              label="calculate"
+              class="p-button-sm p-button-warning"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+  </div>
+</div>
+
+<!-- start footer-->
+<!-- <div
+  id="footer"
+  style="color: ghostwhite"
+  class="footer-copyright text-center py-3"
+>
+  © 2020 Copyright: Theball
+</div> -->
+<!-- end footer-->
