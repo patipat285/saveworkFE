@@ -108,6 +108,11 @@ export class CalhourComponent implements OnInit {
       sum -= 1;
     }
 
+
+    // if(){
+
+    // }
+
     sum += '.' + Math.abs(timeMin);
      console.log("CalhourComponent -> calculate -> asd", sum)
 
@@ -190,16 +195,17 @@ export class CalhourComponent implements OnInit {
 
 
       let timeOut = new Date(datadate.timeOut).getTime();
-      console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", timeOut)
       let timeIn = new Date(datadate.timeIn).getTime();
-      console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", timeIn)
+    
+    
       let time12 = new Date();
       time12.setHours(12)
       time12.setMinutes(0)
       time12.setSeconds(0)
       time12.setMilliseconds(0)
-      let date1 = time12.getTime();
-      console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
+      let date12 = time12.getTime();
+      // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date12", date12)
+   
 
 
       let time13 = new Date();
@@ -207,15 +213,32 @@ export class CalhourComponent implements OnInit {
       time13.setMinutes(0)
       time13.setSeconds(0)
       time13.setMilliseconds(0)
-      let date2 = time13.getTime();
-      console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
-
-
-      if(+timeIn >= +time12 || +timeOut >= +time13){
-        let time = date1 - date2;  //msec
+      let date13 = time13.getTime();
+      // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date13", date13)
+   
+      if(timeIn <=  date12 && timeIn <= date13){
+        let time = timeOut - timeIn;  //msec
         let hoursDiff = time / (3600 * 1000);
-        this.sumTotalHourtext = hoursDiff -1
+        this.sumTotalHourtext =  Math.round(hoursDiff*10)/10 -1;
+        console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> this.sumTotalHourtext", this.sumTotalHourtext)
+
+      }else{
+
+        let time = timeOut - timeIn;  //msec
+        let hoursDiff = time / (3600 * 1000);
+        this.sumTotalHourtext = Math.round(hoursDiff*10)/10;
+
       }
+      
+   
+
+
+      // if(+timeIn <= +time12 || +timeOut >= +time13){
+      
+      //   let time = timeOut - timeIn;  //msec
+      //   let hoursDiff = time / (3600 * 1000);
+      //   this.sumTotalHourtext = hoursDiff -1
+      // }
 
 
       // let time = date1 - date2;  //msec
