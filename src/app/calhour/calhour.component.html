@@ -88,14 +88,16 @@
 
                 <div class="col-sm-10">
                   <p-calendar
-                    name="timeIn"
-                    [style]="{ width: '100%' }"
-                    [showTime]="true"
-                    hourFormat="24"
-                    timeOnly="true"
-                    inputId="timeonly"
+                  name="timeIn"
+                  [(ngModel)]="data.timeIn"
+                  [style]="{'width':'100%'}"
+                  [showTime]="true"
+                  hourFormat="24"
+                  timeOnly="true"
+                  inputId="timeonly"
+                  [defaultDate]="defaultStartDate"
                   >
-                  </p-calendar>
+                </p-calendar>
                 </div>
               </div>
               <br />
@@ -109,12 +111,14 @@
                 <label  class="col-2 col-form-label">Time Out</label>
                 <div class="col-sm-10">
                   <p-calendar
-                    name="timeOut"
-                    [style]="{ width: '100%' }"
-                    [showTime]="true"
-                    hourFormat="24"
-                    timeOnly="true"
-                    inputId="timeonly"
+                  hourFormat="24"
+                  name="timeOut"
+                  [(ngModel)]="data.timeOut"
+                  [style]="{'width':'100%'}"
+                  [inputStyle]="{'width':'100%'}"
+                  timeOnly="true"
+                  inputId="timeonly"
+                  [defaultDate]="defaultStopDate"
                   >
                   </p-calendar>
                 </div>
@@ -122,18 +126,36 @@
               <br />
             </div>
           </div>
+
+
+          <div class="row justify-content-center">
+            <div class="col-6">
+              <div class="form-group row">
+
+                <label  class="col-2 col-form-label">Time Out</label>
+                <div class="col-sm-10">
+                  <input class="form-control" type="text" name="calculate"  [(ngModel)]="sumTotalHourtext" />
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+
+
+
+
         </form>
 
         <div class="row">
           <div class="col text-center">
-            <button
-              pButton
-              type="button"
-              label="calculate"
-              class="p-button-sm p-button-warning"
-            ></button>
+            <button (click)="fnCalDiffHourFromTimeInTimeOut()"  pButton type="button" label="calculate" class="p-button-sm p-button-warning "></button>
+            <span>&nbsp;&nbsp;</span>
+            <button (click)="reset()" pButton type="button" label="Clear"  class="p-button-sm p-button-danger"></button>
           </div>
         </div>
+
+
+
       </div>
     </div>
 
