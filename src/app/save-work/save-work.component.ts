@@ -365,10 +365,7 @@ if(hoursDiff === 9){
       for (const data of this.dataListWork) {
         sumtimeIN = moment(data.timeIn).format('yyyy-MM-DD HH:mm:ss');
         sumtimeOut = moment(data.timeOut).format('yyyy-MM-DD HH:mm:ss');
-        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut(
-          new Date(sumtimeIN),
-          new Date(sumtimeOut)
-        );
+        this.sumHour = this.fnCalDiffHourFromTimeInTimeOut( new Date(sumtimeIN), new Date(sumtimeOut));
         data.hour = this.sumHour;
         sumTotal = sumTotal + data.hour;
         this.sumTotalHour = sumTotal;
@@ -611,8 +608,6 @@ if (timeInH >= 12 && timeOutH <= 18){
 
 // this.sumTotalHourtext = cal1 + cal2
 // console.log("SaveWorkComponent -> calculate -> this.sumTotalHourtext", this.sumTotalHourtext)
-
-
 
 
 
