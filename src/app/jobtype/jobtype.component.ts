@@ -23,6 +23,7 @@ export class JobtypeComponent implements OnInit {
   jobTypeNameDetail: any;
   codeDetail: any;
   submitted = false;
+  disablebtnSave = false;
 
   constructor(private RequestService: RequestService) {}
 
@@ -37,6 +38,7 @@ export class JobtypeComponent implements OnInit {
   }
 
   fnSubmit() {
+
     this.submitted = true;
     if (
       this.jobTypeName == undefined ||
@@ -57,9 +59,11 @@ export class JobtypeComponent implements OnInit {
       code: this.code,
     };
 
+
+
     this.fnCheckDupJobType(data, this.idJobType);
     if (this.idJobType) {
-    
+
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Update Job Type?',
@@ -81,7 +85,7 @@ export class JobtypeComponent implements OnInit {
         }
       });
     } else {
-     
+
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Create Job Type?',
@@ -119,6 +123,7 @@ export class JobtypeComponent implements OnInit {
     this.idJobType = id;
     this.displayModal = true;
     this.headerPopup = 'Update Project';
+
     if (this.idJobType) {
       this.RequestService.getDataJobTypeByIdForUpdate(this.idJobType).subscribe(
         (data) => {
@@ -196,7 +201,12 @@ export class JobtypeComponent implements OnInit {
       let dataForCheckDup: any = data;
       let textError;
       for (const check of dataForCheckDup) {
-        if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code)){
+
+        if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code) && (idcheck === check._id)) {
+          return
+        }
+
+        else if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code)){
           textError = 'ข้อมูลนี้มีอยู่แล้ว';
         }
         // if (check.jobTypeName === checkDup.jobTypeName) {
@@ -204,7 +214,7 @@ export class JobtypeComponent implements OnInit {
         // } else if (check.code === checkDup.code) {
         //   textError = 'Code นี้มีอยู่แล้ว';
         // }
-      
+
       }
       if (textError) {
         Swal.fire({
@@ -216,4 +226,9 @@ export class JobtypeComponent implements OnInit {
 
     });
   }
+
+
+
+
+
 }

@@ -193,48 +193,72 @@ export class CalhourComponent implements OnInit {
       timeOut: this.data.timeOut,
     };
 
+      //ประกาศตัวแปรรับค่า date time
+      let timeIn = new Date(datadate.timeIn).getTime();   //unixTime
+      let timeOut = new Date(datadate.timeOut).getTime(); //unixTime
 
-      let timeOut = new Date(datadate.timeOut).getTime();
-      let timeIn = new Date(datadate.timeIn).getTime();
-    
-    
+
+      //ประกาศตัวแปร รับ new date แล้ว set เวลา
       let time12 = new Date();
       time12.setHours(12)
       time12.setMinutes(0)
       time12.setSeconds(0)
       time12.setMilliseconds(0)
-      let date12 = time12.getTime();
-      // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date12", date12)
-   
+      let date12 = time12.getTime(); // getTime เพื่อเอา date time ตอนเทีย่ง
 
 
+
+      //ประกาศตัวแปร รับ new date แล้ว set เวลา
       let time13 = new Date();
       time13.setHours(13)
       time13.setMinutes(0)
       time13.setSeconds(0)
       time13.setMilliseconds(0)
-      let date13 = time13.getTime();
-      // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> date13", date13)
-   
-      if(timeIn <=  date12 && timeIn <= date13){
-        let time = timeOut - timeIn;  //msec
-        let hoursDiff = time / (3600 * 1000);
-        this.sumTotalHourtext =  Math.round(hoursDiff*10)/10 -1;
-        console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> this.sumTotalHourtext", this.sumTotalHourtext)
+      let date13 = time13.getTime();// getTime เพื่อเอา date time บ่ายโมง
+
+
+      if( timeIn <= date12  ){ // ถ้าเวลาเข้า น้อย กว่า หรือเท่ากับ เที่ยง
+        let time = timeOut - timeIn;  //เอาเวลาออก ลบ เวลาเข้า จะได้ เวลา ที่เป็น milisecond
+        let hoursDiff = time / (3600 * 1000); //หารเอาจำนวนเต็ม = x hour
+        if (timeOut >= date13) { // ถ้า เวลาออก มากกว่า หรือ เท่ากับ บ่ายโมง
+          this.sumTotalHourtext =  Math.round(hoursDiff*10)/10-1; // ให้ลบออก 1 ชั่วโมง
+        } else {
+          this.sumTotalHourtext =  Math.round(hoursDiff*10)/10;
+        }
 
       }else{
-
         let time = timeOut - timeIn;  //msec
         let hoursDiff = time / (3600 * 1000);
         this.sumTotalHourtext = Math.round(hoursDiff*10)/10;
+        // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> sumTotalHourtext", this.sumTotalHourtext)
 
       }
-      
-   
+
+
+    //   09
+    //   18
+    //   if(timeIn <= date12){
+
+    //     if(timeOut >= date13){
+
+    //     }else{
+
+    //   }
+    // }else{
+    //   console.log("ได้ชั่วโมงเต็ม ไม่ลบ 1 ชั่วโมง");
+    // }
+    //   let time = timeOut - timeIn;  //msec
+    //   let hoursDiff = time / (3600 * 1000);
+    //   this.sumTotalHourtext = Math.round(hoursDiff*10)/10 -1;
+
+
+
+
+
 
 
       // if(+timeIn <= +time12 || +timeOut >= +time13){
-      
+
       //   let time = timeOut - timeIn;  //msec
       //   let hoursDiff = time / (3600 * 1000);
       //   this.sumTotalHourtext = hoursDiff -1

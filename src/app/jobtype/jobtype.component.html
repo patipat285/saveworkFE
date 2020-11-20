@@ -253,7 +253,7 @@
 [autoZIndex]="false"
 [draggable]="false"
 [resizable]="false"
-[dismissableMask]="true"
+
 (onHide)="closeModal()"
 >
   <div class="card-body">
@@ -270,6 +270,8 @@
               name="textjobTypeName"
               id="textjobTypeName"
               [(ngModel)]="jobTypeName"
+
+
             />
             </div>
             <div class="form-group">
@@ -281,11 +283,12 @@
                 name="textCode"
                 id="textCode"
                 [(ngModel)]="code"
+
               />
             </div>
           </div>
           <div class="col-12" style="text-align: left">
-            <button (click)="fnSubmit()"  type="submit"  class="btn btn-primary">Save</button>
+            <button (click)="fnSubmit()"   type="submit"  class="btn btn-primary">Save</button>
             <span>&nbsp;</span>
             <button (click)="closeModal()" type="submit"  class="btn btn-primary">Cancel</button>
           </div>

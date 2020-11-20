@@ -250,46 +250,48 @@ export class SaveWorkComponent implements OnInit {
 
   //คำนวน ชั่วโมงจาก เวลา เข้า-ออก
   fnCalDiffHourFromTimeInTimeOut(startDate, endDate) {
-    // let diff = endDate.getTime() - startDate.getTime();
-    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> startDate.getTime()", startDate.getTime())
-    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> endDate.getTime()", endDate.getTime())
-    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> diff", diff)
-    // let days = Math.floor(diff / (60 * 60 * 24 * 1000));
-    // let hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
-    // console.log("hours ====>", hours);
-
-    // if (hours === 9) {
-    //   return hours - 1;
-    // } else if (hours < 9) {
-    //   return hours;
-    // }
-
-let date1 = new Date(endDate).getTime();
-let date2 = new Date(startDate).getTime();
-let time = date1 - date2;  //msec
-let hoursDiff = time / (3600 * 1000);
-console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> hoursDiff", hoursDiff)
-
-
-if(hoursDiff === 9){
-  return hoursDiff -1
-}else{
- return hoursDiff
-}
+ //ประกาศตัวแปรรับค่า date time
+ let timeIn = new Date(startDate).getTime();   //unixTime
+ let timeOut = new Date(endDate).getTime(); //unixTime
 
 
 
+      //ประกาศตัวแปร รับ new date แล้ว set เวลา
+      let time12 = new Date();
+      time12.setHours(12)
+      time12.setMinutes(0)
+      time12.setSeconds(0)
+      time12.setMilliseconds(0)
+      let date12 = time12.getTime(); // getTime เพื่อเอา date time ตอนเทีย่ง
 
 
-    // const date1 = endDate.getTime();
-    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date1", date1)
-    // const date2 = startDate.getTime();
-    // console.log("SaveWorkComponent -> fnCalDiffHourFromTimeInTimeOut -> date2", date2)
 
-    // const diffInMs = Date.parse(date2) - Date.parse(date1);
-    // const diffInHours = diffInMs / 1000 / 60 / 60;
+      //ประกาศตัวแปร รับ new date แล้ว set เวลา
+      let time13 = new Date();
+      time13.setHours(13)
+      time13.setMinutes(0)
+      time13.setSeconds(0)
+      time13.setMilliseconds(0)
+      let date13 = time13.getTime();// getTime เพื่อเอา date time บ่ายโมง
 
-    // console.log(diffInHours);
+
+      if( timeIn <= date12  ){ // ถ้าเวลาเข้า น้อย กว่า หรือเท่ากับ เที่ยง
+        let time = timeOut - timeIn;  //เอาเวลาออก ลบ เวลาเข้า จะได้ เวลา ที่เป็น milisecond
+        let hoursDiff = time / (3600 * 1000); //หารเอาจำนวนเต็ม = x hour
+        if (timeOut >= date13) { // ถ้า เวลาออก มากกว่า หรือ เท่ากับ บ่ายโมง
+          return  Math.round(hoursDiff*10)/10-1; // ให้ลบออก 1 ชั่วโมง
+        } else {
+          return  Math.round(hoursDiff*10)/10;
+        }
+
+      }else{
+        let time = timeOut - timeIn;  //msec
+        let hoursDiff = time / (3600 * 1000);
+        return Math.round(hoursDiff*10)/10;
+
+
+      }
+
   }
 
 
@@ -454,58 +456,6 @@ if(hoursDiff === 9){
 
 
 
-  // fnInsertInRow(dataClone) {
-  //   let newData = _.groupBy(dataClone, 'date');
-  //   console.log("SaveWorkComponent -> fnInsertInRow -> newData", newData)
-  //   let dataTemp = [];
-
-  //   for (const key in newData) {
-  //     if (newData[key].length > 1) {
-  //       let dataListWorkNew1: any = {};
-  //       for (let data of newData[key]) {
-  //         dataListWorkNew1._id = data._id;
-  //         dataListWorkNew1.date = data.date;
-  //         dataListWorkNew1.timeIn = !dataListWorkNew1.timeIn
-  //           ? '' + data.timeIn
-  //           : `${dataListWorkNew1.timeIn}\n${data.timeIn}`;
-  //         dataListWorkNew1.timeOut = !dataListWorkNew1.timeOut
-  //           ? '' + data.timeOut
-  //           : `${dataListWorkNew1.timeOut}\n${data.timeOut}`;
-  //         dataListWorkNew1.project = !dataListWorkNew1.project
-  //           ? '' + data.project
-  //           : `${dataListWorkNew1.project}\n${data.project}`;
-  //         dataListWorkNew1.hour = !dataListWorkNew1.hour
-  //           ? '' + data.hour
-  //           : `${dataListWorkNew1.hour}\n${data.hour}`;
-  //         dataListWorkNew1.jobType = !dataListWorkNew1.jobType
-  //           ? '' + data.jobType
-  //           : `${dataListWorkNew1.jobType}\n${data.jobType}`;
-  //         dataListWorkNew1.detail = !dataListWorkNew1.detail
-  //           ? '' + data.detail
-  //           : `${dataListWorkNew1.detail}\n${data.detail}`;
-  //         dataTemp.push(dataListWorkNew1);
-  //       }
-  //     } else {
-  //       let dataListWorkNew2: any = {};
-  //       dataListWorkNew2._id = newData[key][0]._id;
-  //       dataListWorkNew2.date = newData[key][0].date;
-  //       dataListWorkNew2.timeIn = newData[key][0].timeIn;
-  //       dataListWorkNew2.timeOut = newData[key][0].timeOut;
-  //       dataListWorkNew2.project = newData[key][0].project;
-  //       dataListWorkNew2.hour = newData[key][0].hour;
-  //       dataListWorkNew2.jobType = newData[key][0].jobType;
-  //       dataListWorkNew2.detail = newData[key][0].detail;
-  //       dataTemp.push(dataListWorkNew2);
-  //     }
-  //   }
-
-  //   let dataListWorkNew3 = _.unionBy(dataTemp, 'date');
-  //   this.dataListWork = dataListWorkNew3;
-  //   console.log("SaveWorkComponent -> fnInsertInRow -> this.dataListWork", this.dataListWork)
-
-
-  // }
-
   onSort() {
     this.updateRowGroupMetaData();
 }
@@ -583,12 +533,10 @@ if(timeInH >= 9 && timeOutH <= 18 ){
 
 }
 
-
 if(timeInH >= 9 && timeOutH <= 13){
   calM = timeInM - timeOutM
   calH1 = 12 - timeInH
 }
-
 
 if (timeInH >= 12 && timeOutH <= 18){
  if (timeInH < 13) {
@@ -596,11 +544,6 @@ if (timeInH >= 12 && timeOutH <= 18){
  }
  calH2 = 18 - timeInH
 }
-
-
-
-
-
 
 
 
