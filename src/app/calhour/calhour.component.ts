@@ -207,7 +207,6 @@ export class CalhourComponent implements OnInit {
       let date12 = time12.getTime(); // getTime เพื่อเอา date time ตอนเทีย่ง
 
 
-
       //ประกาศตัวแปร รับ new date แล้ว set เวลา
       let time13 = new Date();
       time13.setHours(13)
@@ -215,6 +214,7 @@ export class CalhourComponent implements OnInit {
       time13.setSeconds(0)
       time13.setMilliseconds(0)
       let date13 = time13.getTime();// getTime เพื่อเอา date time บ่ายโมง
+
 
 
       if( timeIn <= date12  ){ // ถ้าเวลาเข้า น้อย กว่า หรือเท่ากับ เที่ยง
@@ -233,26 +233,6 @@ export class CalhourComponent implements OnInit {
         // console.log("CalhourComponent -> fnCalDiffHourFromTimeInTimeOut -> sumTotalHourtext", this.sumTotalHourtext)
 
       }
-
-
-    //   09
-    //   18
-    //   if(timeIn <= date12){
-
-    //     if(timeOut >= date13){
-
-    //     }else{
-
-    //   }
-    // }else{
-    //   console.log("ได้ชั่วโมงเต็ม ไม่ลบ 1 ชั่วโมง");
-    // }
-    //   let time = timeOut - timeIn;  //msec
-    //   let hoursDiff = time / (3600 * 1000);
-    //   this.sumTotalHourtext = Math.round(hoursDiff*10)/10 -1;
-
-
-
 
 
 

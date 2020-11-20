@@ -56,8 +56,8 @@ export class ProjectComponent implements OnInit {
       projectName: this.projectName
     };
 
-   
 
+    this.fnCheckDupProject(data,this.idProject)
 
     if (this.idProject) {
       Swal.fire({
@@ -82,7 +82,7 @@ export class ProjectComponent implements OnInit {
       });
 
     } else {
-      this.fnCheckDupProject(data)
+
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to Create Project?',
@@ -111,7 +111,7 @@ export class ProjectComponent implements OnInit {
   fnGetDataProject() {
     this.RequestService.getAllDataProject().subscribe((data) => {
       this.dataListProject = data;
-     
+
 
     });
   }
@@ -182,19 +182,30 @@ export class ProjectComponent implements OnInit {
 
 
 
-  fnCheckDupProject(datachek){
+  fnCheckDupProject(datachek,id){
+  let idcheck = id;
   let checkDup = datachek;
+  let textError;
   this.RequestService.getAllDataProject().subscribe((data) => {
     let dataForCheckDup : any  = data;
         for (const check of dataForCheckDup) {
-           if(check.projectName === checkDup.projectName){
-            Swal.fire({
-              icon: 'error',
-              title: 'ข้อมูลซ้ำ',
-              text: 'Project นี้มีอยู่แล้ว',
-            })
+
+          if((check.projectName === checkDup.projectName) && (check._id === idcheck)){
+            return
+          }else if(check.projectName === checkDup.projectName){
+            textError = 'Project นี้มีอยู่แล้ว'
           }
         }
+
+        if(textError){
+          Swal.fire({
+            icon: 'error',
+            title: 'ข้อมูลซ้ำ',
+            text: textError,
+          })
+
+        }
+
     });
   }
 

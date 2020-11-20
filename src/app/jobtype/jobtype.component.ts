@@ -205,7 +205,6 @@ export class JobtypeComponent implements OnInit {
         if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code) && (idcheck === check._id)) {
           return
         }
-
         else if((check.jobTypeName === checkDup.jobTypeName) && (check.code === checkDup.code)){
           textError = 'ข้อมูลนี้มีอยู่แล้ว';
         }
