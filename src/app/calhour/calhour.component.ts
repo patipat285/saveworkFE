@@ -296,7 +296,9 @@ export class CalhourComponent implements OnInit {
 
 
   reset(){
-  this.sumTotalHourtext = ''
+    this.data.timeIn  = moment(this.nowIn, 'YYYY-MM-DD HH:mm', true).toDate();
+    this.data.timeOut = moment(this.nowOut, 'YYYY-MM-DD HH:mm', true).toDate();
+    this.sumTotalHourtext = ''
   }
 
 
