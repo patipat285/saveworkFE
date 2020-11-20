@@ -82,96 +82,21 @@
     </div>
   </nav>
 
+  <br>
+
+
 
 
 
   <br />
+
+
   <div class="container">
-    <div class="card">
-      <div class="card-body" >
-        <h5 style="text-align: center;">
-          SEARCH
-        </h5>
-        <br />
-
-        <form>
-          <div class="row justify-content-center">
-            <div class="col-6">
-              <div class="form-group row">
-                <label class="col-3 col-form-label">Date From</label>
-                <div class="col">
-                  <p-calendar
-                  [placeholder]="'Select Date'"
-                  name="searchFromDateFrom"
-                  [(ngModel)]="searchFromDateFrom"
-                  [style]="{'width':'100%'}"
-                  [inputStyle]="{'width':'100%'}"
-                  [monthNavigator]="true"
-                  [yearNavigator]="true"
-                  yearRange="2000:2030"
-
-                  inputId="navigators">
-                </p-calendar>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-
-
-          <div class="row justify-content-center">
-            <div class="col-6">
-              <div class="form-group row">
-                 <label  class="col-3 col-form-label">Project</label>
-                <div class="col" >
-                  <select name="searchFromProject" [(ngModel)]="searchFromProject" class="custom-select" >
-                    <option style="color: gray;" value=""  selected >Please Choose Project...</option>
-                    <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}"  >{{data.projectName}}</option>
-                  </select>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="row justify-content-center">
-            <div class="col-6">
-              <div class="form-group row">
-                 <label  class="col-3 col-form-label">Job Type</label>
-                <div class="col">
-                  <select class="custom-select" [(ngModel)]="searchFromJobType" name="searchFromJobType" >
-                    <option style="color: gray;"  value=""  selected >Please Choose Job Type...</option>
-                    <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
-                  </select>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </form>
-
-        <br>
-
-
-        <div class="row">
-          <div class="col text-center">
-            <button   (click)="fnSearchDataWork()" pButton type="button" label="Search" icon="pi pi-search" class="p-button-sm p-button-warning "></button>
-            <span>&nbsp;&nbsp;</span>
-            <button (click)="clickClear()"  pButton type="button" label="Clear" icon="pi pi-times-circle" class="p-button-sm p-button-danger"></button>
-          </div>
-        </div>
-
-      </div>
+    <div class="card-body">
+      <h4 style="text-align: center; color: rgb(28, 90, 169) ;">The Daily Work Schedule recording</h4>
     </div>
 
     <hr />
-
-
-  </div>
-
-  <div class="container">
 <div class="card">
   <div class="card-body">
 
@@ -200,8 +125,94 @@
 
     <br>
 
+    <div class="container">
+      <div class="card">
+        <div class="card-body" >
+          <h5 style="text-align: center;">
+            SEARCH
+          </h5>
+          <br />
+
+          <form>
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <div class="form-group row">
+                  <label class="col-3 col-form-label">Date From</label>
+                  <div class="col">
+                    <p-calendar
+                    [placeholder]="'Select Date'"
+                    name="searchFromDateFrom"
+                    [(ngModel)]="searchFromDateFrom"
+                    [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}"
+                    [monthNavigator]="true"
+                    [yearNavigator]="true"
+                    yearRange="2000:2030"
+
+                    inputId="navigators">
+                  </p-calendar>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <div class="form-group row">
+                   <label  class="col-3 col-form-label">Project</label>
+                  <div class="col" >
+                    <select name="searchFromProject" [(ngModel)]="searchFromProject" class="custom-select" >
+                      <option style="color: gray;" value=""  selected >Please Choose Project...</option>
+                      <option *ngFor="let data of dataDropdownProject" value="{{data.projectName}}"  >{{data.projectName}}</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <div class="form-group row">
+                   <label  class="col-3 col-form-label">Job Type</label>
+                  <div class="col">
+                    <select class="custom-select" [(ngModel)]="searchFromJobType" name="searchFromJobType" >
+                      <option style="color: gray;"  value=""  selected >Please Choose Job Type...</option>
+                      <option *ngFor="let data of dataDropdownJobType" value="{{data.code}}" >{{data.jobTypeName}}</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+
+          <br>
+
+
+          <div class="row">
+            <div class="col text-center">
+              <button   (click)="fnSearchDataWork()" pButton type="button" label="Search" icon="pi pi-search" class="p-button-sm p-button-warning "></button>
+              <span>&nbsp;&nbsp;</span>
+              <button (click)="clickClear()"  pButton type="button" label="Clear" icon="pi pi-times-circle" class="p-button-sm p-button-danger"></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <hr />
+
+
+    </div>
+    <br>
+
   <p-table
-   styleClass="p-datatable-sm"
+   styleClass="p-datatable-sm "
    [resizableColumns]="true"
    [value]="dataListWork"
    [paginator]="true"
