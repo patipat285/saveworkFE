@@ -335,6 +335,8 @@ export class SaveWorkComponent implements OnInit {
     // };
     // this.dataCreate = {}
     this.submitted = false;
+    this.idWork = null
+
   }
 
 
@@ -464,22 +466,23 @@ export class SaveWorkComponent implements OnInit {
 
 
   updateRowGroupMetaData() {
-    this.rowGroupMetadata = {};
-    if (this.dataListWork) {
-        for (let i = 0; i < this.dataListWork.length; i++) {
-            let rowData = this.dataListWork[i];
-            let representativeName = rowData.date;
-            if (i == 0) {
-                this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
+    this.rowGroupMetadata = {}; // ประกาศตัวแปรเป็น object เปล่า
+    if (this.dataListWork) { //ถ้ามี datalist
+        for (let i = 0; i < this.dataListWork.length; i++) { // วนลูป for ประกาศ i = 0 โดยเงื่อนถ้า i น้อยกว่า length ของ datalist ให้ i +1
+            let rowData = this.dataListWork[i]; // เก็บ เก็บ data ของ row ที่ i
+            console.log("🚀 ~ file: save-work.component.ts ~ line 471 ~ SaveWorkComponent ~ updateRowGroupMetaData ~ rowData", rowData)
+            let date = rowData.date; // ประกาศตัวแปร date รับค่า date จาก data ของ row ที่ i
+            if (i == 0) { // ถ้า  i เท่ากับ 0
+                this.rowGroupMetadata[date] = { index: 0, size: 1 }; // set value ให้ object
             }
-            else {
+            else { //ถ้า i ไม่เท่ากับ 0
                 let previousRowData = this.dataListWork[i - 1];
                 let previousRowGroup = previousRowData.date;
 
-                if (representativeName === previousRowGroup)
-                    this.rowGroupMetadata[representativeName].size++;
+                if (date === previousRowGroup)
+                    this.rowGroupMetadata[date].size++;
                 else
-                    this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
+                    this.rowGroupMetadata[date] = { index: i, size: 1 };
             }
         }
     }

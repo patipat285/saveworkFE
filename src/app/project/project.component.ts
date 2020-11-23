@@ -172,6 +172,7 @@ export class ProjectComponent implements OnInit {
     this.displayModal = false;
     this.projectName = ''
     this.submitted = false;
+    this.idProject = null;
   }
 
 

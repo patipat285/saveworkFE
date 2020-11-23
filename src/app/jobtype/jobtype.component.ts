@@ -169,6 +169,7 @@ export class JobtypeComponent implements OnInit {
     this.jobTypeName = '';
     this.code = '';
     this.submitted = false;
+    this.idJobType = null;
   }
 
   clickClear() {
